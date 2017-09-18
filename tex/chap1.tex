@@ -1,0 +1,15 @@
+\section{Transmitter} \label{sec_transmitter}
+
+The construction of the transmitter follows Dr. John Zweck's construction of a transmitter for the C++ library, PhoSSiL.
+
+First, construct a pulse shape as the function:
+
+\begin{equation}
+\label{eq_pulseshape}
+p(t) = \left\{
+\begin{array}{ll}
+1, & |t| \le \frac{1-\beta}{2}T \\
+0, & |t| \ge \frac{1+\beta}{2}T \\
+\frac{1}{2}[1-\sin(\frac{\pi(|t|-\frac{T}{2}}{\beta T})], & \text{otherwise}
+\end{array} \right.
+\end{equation}
