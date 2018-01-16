@@ -1,0 +1,116 @@
+\documentclass[20pt]{article}
+	%\includeonly{./tex/intro, ./tex/chap1}
+	
+	\usepackage{amsmath}
+	
+	\usepackage{graphicx}
+	\usepackage{tikz}
+	
+	\usepackage{enumerate}
+	
+	\title{Optical Impairments on a Timing Signal Located on the Boundaries of Two Communication Channels}
+	\author{Patrick G. Sykes}
+	
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}[I]
+
+\item Introduction
+
+\begin{enumerate}[i]
+
+\item Motivation: Time and frequency dissemination is increasingly being performed by optical fiber networks. If time signal propagation is possible on the boundaries of two communication channels reliably, we can transmit these timing signals over the existing fiber network without dedicating a current data channel for that timing signal.
+\item Work on transmitting time signals through fiber
+\begin{itemize}
+	\item White Rabbit Project: Collaboration between CERN and GSI. 
+		\begin{itemize} 
+			\item CERN uses it for Large Hadron Collider 
+			\item GSI uses it for Facility for Antiproton and Ion Research
+			\item Mention project DEMETRA? Unsure of the project's current status
+		\end{itemize}
+		
+		\item REFIMEVE$+$ Project in France: Transmits timing signal on channel \#$44$ ($1542.12$ nm)
+		
+		\item Work by LNE--SYRTE (Pottie)
+		
+		\item Polish group (Sliwczynski, Buczek, Lipinski)
+		
+		\item Chinese paper (Zhang, Wu, Li, Chen)
+		
+		\item Future European metrologic system CLONETS in investigation stages, will connect multiple European sites in time distribution network
+\end{itemize}
+
+	\item Application
+	\begin{itemize}
+		\item GPS
+		\item Synchronization for experiments requiring extremely precise and accurate time measurement, i.e. LHC, special relativity
+		\item Astronomical measurements between distant observatories
+		\item Timestamping financial transactions
+		\item Digital forensics
+	\end{itemize}
+
+\end{enumerate}
+
+\item Background on Optical Impairments
+
+\begin{enumerate}[i]
+
+	\item Linear Impairments
+	\begin{itemize}
+		\item Attenuation: Periodic repeater spacing adds ASE noise to the timing signal.
+		
+		\item Dispersion: Timing signal has small bandwidth, so dispersion has negligible affect.  However, it will spread a data channel pulse and affect the amount of nonlinear interaction between the timing and data channel.
+	\end{itemize}
+
+		\item Nonlinear Impairments
+	\begin{itemize}
+		\item Rayleigh scattering: Adds to the attenuation
+		
+		\item Brillouin and Raman scattering: There's an upper bound for the power of the timing signal, above this bound and then scattering may have a larger affect
+		
+		\item Self-phase modulation: There's an upper bound for the power of the timing signal, above this bound and then SPM may have a larger affect
+		
+		\item Can set the lowest threshold of the bounds of the previous two points as a bound on the power of the timing signal
+		
+		\item Four wave mixing: If wave vectors don't satisfy phase matching conditions, then this has a negligible affect.  This can be satisfied as long as the timing signal is not located near the zero dispersion point.
+		
+		\item Cross-phase modulation: The main impairment of our analysis.  Will dedicate more time to it in chapter 4.
+	\end{itemize}
+
+\end{enumerate}
+
+\item Measuring Time Stability
+\begin{enumerate}[i]
+
+\item Power spectrum of phase and fractional frequency
+
+\item Allan deviation
+
+\item Structure equations
+
+\item Relations between the measures
+
+\end{enumerate}
+
+\item Nonlinear interaction between data and timing channel
+\begin{enumerate}[i]
+
+	\item Derivation of $\Delta\phi = \phi(z,t) - \phi(z=0,t) = \int_0^z |u_c(\zeta, t)|^2 d\zeta$ where $u_c(z,t)$ is the data channel envelope function.
+
+	\item Evolution of data channel envelope over fiber propagation: how dispersion affects the pulse shape and distribution of intensities as a function of $z$.
+	
+	\item Computational results for $\Delta\phi$: Note that we must compute the envelope with a relative group velocity.  View the reference frame as travelling with the timing signal, then the data channel will be passing through it at some relative group velocity.
+	
+	\item Time stability measures on $\Delta\phi$: Allan deviation is standard in publications.  We are able to compute the structural equations, and obtain the Allan deviation.
+
+	\item Compare our results to experiments.
+
+\end{enumerate}
+
+\item Conclusion:  Reiterate, reiterate, reiterate.
+
+\end{enumerate}
+
+\end{document}

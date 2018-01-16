@@ -1,0 +1,27 @@
+\label{chap:time_stability}
+
+\section{Introduction}
+
+The development of atomic clocks motivated the search for standards to measure time stability.
+
+Keeping time requires a periodic event that can be counted and a time reference point.  To synchronize two clocks: they need to phase match the periodic event, and figure out the reference point. Figuring out the reference point requires figuring out the delay due to propagation which can be achieved by transmitting their time and then wait to receive that time from the other clock. The White Rabbit Project achieves synchronization by using Synchronous Ethernet, for syntonization, and IEEE $1588$ Precision Time Protocol. 
+
+The various causes for oscillator instability are . However, this thesis concerns the instabilities caused by the impairments in the fiber medium and amplifiers and not instability from environmental affects and issues with the oscillator source.
+
+A time signal can be represented as 
+%
+\begin{equation}
+	u_c(t) = (U_0 + \epsilon(t)) \sin(\omega_0t + \phi(t))
+\end{equation}
+%
+The $U_0$ is the amplitude and $\epsilon(t)$ is amplitude fluctuation. The quantities are $\omega_0$ is the nominal angular frequency and $\phi(t)$ is the phase fluctuation.  It is possible for the amplitude fluctuation to become phase noise, so it is assumed that $\epsilon(t) << U_0$ to make the effect negligible.  We give suitable conditions on the amplitude fluctuation in chapter~\ref{chap:fiber_impairments}.
+
+
+
+The instantaneous frequency defined as the time derivative of the total phase
+%
+\begin{equation}
+	\omega(t) = \frac{d}{dt}\left[ \omega_0t + \phi(t)\right] = \omega_0 + \dot{\phi}(t)
+\end{equation}
+%
+where we denote $\dot{\phi}(t)$ the time derivative of the phase fluctuation.

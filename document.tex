@@ -1,7 +1,22 @@
-\documentclass{book}
-	\includeonly{./tex/chap1, ./tex/chap2}
+\documentclass[12pt]{book}
+	\includeonly{./tex/introduction}
+	%\includeonly{./tex/fiber_impairments, ./tex/time_stability}
+	
+	\usepackage{amsmath}
+	
+	\usepackage{setspace}
+	
+	\usepackage{graphicx}
+	\usepackage{tikz}
+	
+	\doublespacing
+	
+	
 \begin{document}
-	\include{./tex/intro}
-	\include{./tex/chap1}
-	\include{./tex/chap2}
-\end{document}}
+	\include{./tex/introduction}
+	\include{./tex/fiber_impairments}
+	\include{./tex/time_stability}
+	
+	\bibliographystyle{ieeetr}
+	\bibliography{document}
+\end{document}
