@@ -1,19 +1,151 @@
+
+\chapter{Optical Fiber Impairments}
 \label{chap:fiber_impairments}
 
-\section{Background Information} \label{sec_background}
+
+\section{Introduction}
+
+Optical phenomena in fiber optics provide a source of distortion for a frequency signal. Previous work highlights the various optical impairments in fiber and their influence on a frequency signal (Dr. Menyuk), in this chapter we briefly summarize that work and relate it to our simulations.
+
+The propagation of light through optical fiber is modeled by the Nonlinear Schrodinger (NLS) Equation,
+%
+\begin{equation} \label{eq:nlse}
+\diffp{u}{z} + \beta_1\diffp{u}{t} + \frac{i\beta_2}{2}\diffp{^2u}{t^2} + \frac{\alpha}{2}u = i\gamma|u|^2u.
+\end{equation}
+where $u$ is the pulse envelope, $\beta_1$ is the group velocity, $\beta_2$ is the group velocity dispersion, $\alpha$ is the attenuation, and $\gamma$ is the Kerr nonlinearity. 
+
+We split the input signal into a combination of two signals, $u_d$ the data channel and $u_f$ the frequency channel. It is helpful to define a reference frame moving with the frequency signal $T = t - z/v_f$, where $T$ is the retarded time and $v_f$ is the group velocity of the frequency signal. The data channel now travels at the group-velocity difference $d = (v_f - v_d)/(v_fv_d)$.
+
+The right hand side of eq.~\ref{eq:nlse} is nonlinear, so the sum of two signals must be handled carefully,
+%
+\begin{align}
+\nonumber
+|u_d + u_f|^2&(u_d + u_f) = (u_d + u_f)(u_d^* + u_f^*)(u_d + u_f) \\
+&= |u_d|^2u_d + 2|u_f|^2u_d + u_f^2u_d^* + u_d^2u_f^* + 2|u_d|^2u_f + |u_f|^2u_f.
+\end{align}
+%
+We can now decouple eq.~\ref{eq:nlse} into two differential equations,
+%
+\begin{align}
+\label{eq:dfreq}
+&\diffp{u_f}{z} + \frac{\alpha_f}{2}u_f + \frac{i\beta_{2f}}{2}\diffp{^2u_f}{T^2} = i\gamma_f\left( |u_f|^2u_f + 2|u_d|^2u_f + u_d^2u_f^* \right) \\
+\label{eq:ddata}
+&\diffp{u_d}{z} + \frac{\alpha_d}{2}u_d + d\diffp{u_d}{T} + \frac{i\beta_{2d}}{2}\diffp{^2u_d}{T^2} = i\gamma_d\left( |u_d|^2u_d + 2|u_f|^2u_d + u_f^2u_d^* \right).
+\end{align}
+%
+The subscripts $d$ and $f$ correspond to the material properties $\alpha$, $\beta_2$, and $\gamma$ for data and frequency channels, respectively. The term $d\partial u_d/\partial T$ in eq.~\ref{eq:ddata} governs the group velocity of the data channel relative to the reference frame following the frequency signal.
+
+In this chapter we will define each of the impairment terms in eqs.~\ref{eq:dfreq} and \ref{eq:ddata} and give suitable conditions under which they will negligibly affect the phase stability. Then we will further examine the primary source of phase instability.
 
 
+\section{Optical Impairments} \label{sec:impair}
 
-\subsection{Optical Impairments}
+In the previous section, we pointed out the nonlinear term and how the sum of two signals creates multiple nonlinear terms. In this section, we shall examine each of the terms related to an optical impairment and how that impairment affects the frequency signal. In the analysis we introduce conditions on the data and frequency channel to make terms in the decoupled equations \ref{eq:dfreq} and \ref{eq:ddata} negligible. 
 
-There are many linear and non-linear impairments of an optical signal.  Linear impairments are attenuation and dispersion.  The non-linear impairments are scattering (Rayleigh, Brillouin, Raman), self-phase modulation, four-wave mixing, and cross-phase modulation. Each of these impairments will affect the accuracy of a timing signal. Under a suitable power threshold some of the non-linear impairments will negligibly affect the timing signal.
+\subsection{Attenuation and Amplified Spontaneous Emission (ASE)}
+%
+Attenuation appears in the decoupled equations above as
+%
+\begin{equation*}
+\diffp{u_f}{z} = -\frac{\alpha_f}{2}u_f, \qquad \diffp{u_d}{z} = -\frac{\alpha_d}{2}u_d.
+\end{equation*}
 
-\subsubsection{Linear Impairments}
+The attenuation is due to absorption and scattering and will decrease the optical power of the frequency signal exponentially. Amplifiers are spaced periodically to compensate the loss of optical power, but they add noise due to spontaneous emission of photons in the process.  The ASE is a white noise source with noise power
+%
+\begin{equation}
+\sigma^2_{ASE} = n_{sp}h\nu_0 (G-1)\Delta\nu
+\end{equation}
+%
+where $n_{sp}$ is called the spontaneous emission factor, $h$ is Planck's constant, $\nu_0$ is the center frequency, $G$ is the gain of the amplifier, and $\Delta\nu$ is the bandwidth of the signal. The bandwidth of the frequency signal will be very narrow making the ASE noise negligible. Notice that the equations \ref{eq:dfreq} and \ref{eq:ddata} are dependent on the frequency signal power, we want to keep this dependency small but so small such that the signal is dominated by ASE noise.
 
-\large{Attenuation}
+Consider an optical communication system that has $800$ km distance and $80$ km amplifier separation operating at the wavelength $1.5$ $\mu$m with loss $\alpha = 0.2$ dB/km. This implies a gain $G=40$. A typically amplifier will have noise figure $n_{sp} = 2$ with $10$ amplifiers altogether. Supposing the narrow bandwidth of the frequency signal is on the order of $10$ MHz, then the total noise power is $1$ nW.
 
-\subsubsection{Non-Linear Impairments}
+\subsection{Chromatic Dispersion}
+
+The dispersion appears as
+%
+\begin{equation*}
+\diffp{u_f}{z} = -\frac{i\beta_{2f}}{2}\diffp{^2u_f}{T^2}, \qquad \diffp{u_d}{z} = -\frac{i\beta_{2d}}{2}\diffp{^2u_d}{T^2}.
+\end{equation*}
+%
+This impairment is the form of pulse spreading because the various frequency components of a channel travel at different velocities. The time spread due to dispersion is
+%
+\begin{equation}
+\tau_{disp} = DL\Delta \lambda 
+\end{equation}
+%
+where $D$ is the dispersion parameter, $L$ is the length of the fiber, and $\Delta\lambda$ is the range of wavelengths. Since $\Delta\lambda = \lambda\Delta\nu/\nu$, we see that the narrow bandwidth of the frequency signal will cause a negigible spread in time.
+
+For the optical communication system in the previous example, we find $\tau_{disp} = 1$ ps.
+
+%\subsection{Scattering}
+%
+%Scattering doesn't have explicit terms in the decoupled equations above. They will affect the signals in the form of attenuation and the creation of parasitic waves. We split up the types of scattering into those two cases:
+%
+%\subsubsection{Rayleigh Scattering}
+%
+%During fiber fabrication, the crystal lattice can form nonuniformly and create density variations along its length. This form of scattering contributes to the majority of loss and is covered above.
+%
+%\subsubsection{Brillouin and Raman Scattering}
+%
+%Optical waves can couple with acoustic waves and form optical waves of a lower frequency. These parasitic waves sap energy from the frequency signal.
 
 
+\subsection{Self-Phase Modulation (SPM)}
 
-\subsection{Clock Stability}
+The terms
+\begin{equation*}
+\diffp{u_f}{z} = i\gamma_f|u_f|^2u_f, \qquad
+\diffp{u_d}{z} = i\gamma_d|u_d|^2u_d
+\end{equation*}
+correspond to self-phase modulation. This distortion takes the form of a phase shift dependent on the signal power. Thus, linear attenuation limits the effect over some length after each amplifier. The effective length is $L_{eff} = (1/\alpha)[1-\exp(-\alpha L)]$, so $L_{eff} \approx 20$ km for $\alpha_{dB} = 0.2$ dB/km.
+
+The maximum phase shift due to self-phase modulation for a length of fiber between amplifiers is
+%
+\begin{equation} \label{eq:maxspm}
+\phi_{SPM} = \gamma P_f L_{eff}
+\end{equation}
+%
+where $P_f$ is the power of the frequency signal. The total maximum phase shift will be a multiplication of eq.~\ref{eq:maxspm} by the number of amplifiers in the fiber link.
+
+For our typical system, $\gamma = 1.3$ W$^{-1}$km$^{-1}$, $L_{eff} = 20$ km, and giving an upperbound on $\phi_{SPM}$ of 1 radian, then the upper bound on the frequency signal power is $3.8$ mW.
+
+\subsection{Four-Wave Mixing (FWM)}
+
+The terms
+\begin{equation*}
+\diffp{u_f}{z} = i\gamma_f u_d^2u_f^*, \qquad \diffp{u_d}{z} = i\gamma_d u_f^2u_d^*
+\end{equation*}
+correspond to four-wave mixing. For any two data signals centered at $\omega_1$ and $\omega_2$ with corresponding wavenumbers $\beta(\omega_1)$ and $\beta(\omega_2)$, then FWM creates a parasitic wave whenever $\omega_1 + \omega_2 = 2\omega_f$ and $\beta(\omega_1) + \beta(\omega_2) = 2\beta(\omega_f)$. This phase-matching condition is avoidable as long as the channels are located away from the zero dispersion wavelength of the fiber. Placing the frequency signal greater than $5$ times its bandwidth away from the zero dispersion wavelength should eliminate this impairment.
+
+\subsection{Cross-Phase Modulation (XPM)}
+
+The remaining terms,
+\begin{equation*}
+\diffp{u_f}{z} = i2\gamma_f|u_d|^2u_f, \qquad \diffp{u_d}{z} = i2\gamma_d|u_f|^2u_d
+\end{equation*}
+correspond to cross-phase modulation. XPM represents the cross-talk between two channels. This error becomes negligible when the group velocity difference between the data and frequency channels is large. This typically occurs when the two channels are spaced very far apart in the frequency spectrum. Therefore, the effects of XPM on the frequency signal only needs to be computed for the two nearest neighboring data channels. Since our goal is to place the frequency signal on the interstices of two data channels, XPM will become our primary source of frequency distortion. The limitation on the optical power of the frequency signal for the other effects, will eliminate the effect of XPM on the data channels from the frequency channel.
+
+\section{Phase noise on the frequency signal} \label{sec:noisexpm}
+
+Applying our limits on the system parameters, in the previous section, on the uncoupled equations \ref{eq:dfreq} and \ref{eq:ddata}, results in the following equations
+%
+\begin{align}
+\label{eq:simpledfreq}
+&\diffp{u_f}{z} = i2\gamma_f|u_d|^2u_f \\
+&\diffp{u_d}{z} + \frac{\alpha_d}{2}u_d + d\diffp{u_d}{T} + \frac{i\beta_{2d}}{2}\diffp{^2u_d}{T^2} = i\gamma_d|u_d|^2u_d.
+\end{align}
+%
+Supposing the frequency signal is of the form $u_f(z,T) = u_f(0,T)\exp(i\phi(z,T))$, where $u_f(0,T)$ is the initial frequency source and $\phi(z,T)$ is phase distortion due to XPM. Then, we can solve for the phase distortion using \ref{eq:simpledfreq},
+%
+\begin{equation} \label{eq:phasedistort}
+	\phi(z,T) = 4\gamma_f\int_0^z |u_d(0, T-\zeta d)|^2 d\zeta.
+\end{equation}
+%
+The frequency signal will be equally spaced between two neighboring data channels so eq.~\ref{eq:phasedistort} was doubled.
+
+The data channel is now subject to the effects of loss, dispersion, time shift due to group velocity differences, and self-phase modulation. Now studying the phase distortion on the frequency signal depends entirely on the evolution of the data channel as it propagates through the fiber.
+
+\section{Chapter Remarks} \label{sec:3conc}
+
+By limiting the frequency signal's optical power and its location on the frequency spectrum, we can limit the causes of phase distortion due to various optical impairments. This leaves the distortion to one principal source, XPM. In the next chapter, we perform computations to estimate $\phi(z,T)$ for common system parameters of a commercial fiber optic communication system.

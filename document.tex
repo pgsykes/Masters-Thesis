@@ -1,6 +1,10 @@
-\documentclass[12pt]{book}
+\documentclass[11pt, letterpaper, twoside, openright]{book}
 	\includeonly{./tex/introduction}
-	%\includeonly{./tex/fiber_impairments, ./tex/time_stability}
+%	\includeonly{./tex/time_stability}
+%	\includeonly{./tex/fiber_impairments}
+%	\includeonly{./tex/results}
+
+%	\includeonly{./tex/fiber_impairments, ./tex/results}
 	
 	\usepackage{amsmath}
 	
@@ -8,14 +12,36 @@
 	
 	\usepackage{graphicx}
 	\usepackage{tikz}
+
+
+
+% Differentiation
+\renewcommand*{\d}{\mathrm{d}}
+\newcommand*{\dd}{\partial}
+
+\newcommand*{\diffp}[2]{\ensuremath{\frac{\dd #1}{\dd #2}}}
+\newcommand*{\diffpp}[3]{\ensuremath{\frac{\dd^2 #1}{\dd #2 \dd #3}}}
+\newcommand*{\diffppp}[4]{\ensuremath{\frac{\dd^3 #1}{\dd #2 \dd #3 \dd #4}}}
+\newcommand*{\difff}[2]{\ensuremath{\frac{\d #1}{\d #2}}}
+\newcommand*{\diffff}[3]{\ensuremath{\frac{\d^2 #1}{\d #2 \d #3}}}
+\newcommand*{\D}{\mathcal{D}}
+\newcommand*{\I}{\mathcal{I}}
+\def\ip #1#2{\lbrack\!\lbrack #1 | #2 \rbrack\!\rbrack}
+
+
+
 	
 	\doublespacing
 	
 	
 \begin{document}
+	\tableofcontents
+	
 	\include{./tex/introduction}
-	\include{./tex/fiber_impairments}
 	\include{./tex/time_stability}
+	\include{./tex/fiber_impairments}
+	\include{./tex/results}
+	\include{./tex/conclusion}
 	
 	\bibliographystyle{ieeetr}
 	\bibliography{document}

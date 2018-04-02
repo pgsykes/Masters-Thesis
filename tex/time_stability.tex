@@ -1,27 +1,176 @@
+\chapter{Phase and Frequency Stability Measures}
 \label{chap:time_stability}
 
 \section{Introduction}
 
-The development of atomic clocks motivated the search for standards to measure time stability.
+Keeping time requires a periodic event that can be counted and a time reference point.  To synchronize two clocks: they need to phase match the periodic event, and transfer the reference point. Figuring out the reference point requires calculating an approximate delay due to propagation which can be achieved by transmitting a time point and then wait to receive confirmation from the other system. The White Rabbit Project achieves synchronization by using Synchronous Ethernet for syntonization, and IEEE $1588$ Precision Time Protocol to determine the initial time point. 
 
-Keeping time requires a periodic event that can be counted and a time reference point.  To synchronize two clocks: they need to phase match the periodic event, and figure out the reference point. Figuring out the reference point requires figuring out the delay due to propagation which can be achieved by transmitting their time and then wait to receive that time from the other clock. The White Rabbit Project achieves synchronization by using Synchronous Ethernet, for syntonization, and IEEE $1588$ Precision Time Protocol. 
+However, no frequency source is perfect, there can be initialization errors, manufacturing flaws, and environmental effects. The various environmental causes for oscillator instability are pressure, temperature, magnetic fields. %%%%extend 
+This thesis investigates the instabilities caused by optical impairments from the fiber medium and amplifiers and not instability from environmental effects or issues inherent to the oscillator source and setup.
 
-The various causes for oscillator instability are . However, this thesis concerns the instabilities caused by the impairments in the fiber medium and amplifiers and not instability from environmental affects and issues with the oscillator source.
-
-A time signal can be represented as 
+A frequency source can be represented as 
 %
 \begin{equation}
+	\label{eq:freqsignal}
 	u_c(t) = (U_0 + \epsilon(t)) \sin(\omega_0t + \phi(t))
 \end{equation}
 %
-The $U_0$ is the amplitude and $\epsilon(t)$ is amplitude fluctuation. The quantities are $\omega_0$ is the nominal angular frequency and $\phi(t)$ is the phase fluctuation.  It is possible for the amplitude fluctuation to become phase noise, so it is assumed that $\epsilon(t) << U_0$ to make the effect negligible.  We give suitable conditions on the amplitude fluctuation in chapter~\ref{chap:fiber_impairments}.
+The $U_0$ is the amplitude and $\epsilon(t)$ is amplitude fluctuation. The quantities $\omega_0$ is the nominal angular frequency and $\phi(t)$ is the phase fluctuation. The amplitude fluctuation must be much less than the nominal amplitude, $|\epsilon(t)| << |U_0|$, otherwise eq.~\ref{eq:freqsignal} is an amplitude modulated signal and outside the scope of this work.  Similarly, in order to avoid frequency modulation the condition $|\dot{\phi}(t)| << |\omega_0|$ is necessary, where the dot represents the time derivative.
 
-
-
-The instantaneous frequency defined as the time derivative of the total phase
+The instantaneous frequency is defined as the time derivative of the total phase
 %
 \begin{equation}
-	\omega(t) = \frac{d}{dt}\left[ \omega_0t + \phi(t)\right] = \omega_0 + \dot{\phi}(t)
+	\omega(t) = \frac{d}{dt}\left[ \omega_0t + \phi(t)\right] = \omega_0 + \dot{\phi}(t).
 \end{equation}
 %
-where we denote $\dot{\phi}(t)$ the time derivative of the phase fluctuation.
+
+Some literature uses the fractional frequency, $y(t)$, and the phase time, $x(t)$,
+%
+\begin{equation*}
+y(t) = \frac{\omega(t) - \omega_0}{\omega_0} = \frac{\dot{\phi}(t)}{\omega_0}, \;\;\;\;\; x(t) = \int_0^t y(\tau)d\tau = \frac{\phi(t)}{\omega_0}
+\end{equation*}
+%
+but we will mainly work with the $\phi$ and $\dot{\phi}$ quantities. The relations to $y$ and $x$ are shown above. Using $\phi$ and $\dot{\phi}$ emphasizes the phase and frequency error of the signal and is more convenient in theoretical work, whereas the fractional frequency and phase time are better suited in system measurements. Note also that $x$ and $\phi$ are measured instantaneously, while measuring $y$ requires a time average
+%
+\begin{equation} \label{eq:avgy}
+\bar{y}_k = \frac{1}{\tau}\int_{t_k}^{t_k+\tau} y(t)dt.
+\end{equation}
+
+The invention of atomic clocks necessitated a means of quantifying frequency stability. Since the stability is partly a random process, the use of statistics like the power spectral density (PSD) is a fundamental measure. Calculating a true variance of the process may not be realizable leading to the invention of the Allan variance. And there is third approach using structure functions. In this chapter, we will describe these different measures and then show the relationships between them.
+
+\section{Power Spectral Density} \label{sec:psd}
+
+The method of measuring power spectral density is simple, the PSD of the phase noise can be obtained by feeding the output of a phase demodulator through a spectrum analyser, and, similarly, the PSD of the frequency noise by using a spectrum analyser on the output of a frequency demodulator.
+
+For any of the $x$, $y$, $\phi$, and $\dot{\phi}$ the autocorrelation is defined as
+%
+\begin{equation}
+R_\phi(\tau) = E\{\phi(t)\phi(t+\tau)\} = \lim\limits_{T\to\infty}\frac{1}{T}\int_{0}^{T} \phi(t)\phi(t+\tau)dt.
+\end{equation}
+%
+And the PSD is the Fourier transform of the autocorrelation
+%
+\begin{align}
+S_\phi(\omega) &= 2\int_0^\infty R_\phi(\tau)\cos(\omega\tau)d\tau \\
+R_\phi(\tau) &= \frac{1}{\pi}\int_0^\infty S_\phi(\omega)\cos(\omega\tau)d\omega
+\end{align}
+%
+Evaluating $R_\phi(\tau)$ at $\tau = 0$ gives us the second moment of $\phi$, 
+%
+\begin{equation*}
+R_\phi(0) = E\{[\phi(t)]^2\} = \int_0^\infty S_\phi(\omega) d\omega .
+\end{equation*}
+%
+This can also be considered the total "power" of the signal. If we compare the power spectrum of two different sources, then the one with lower total power will typically have less error.
+
+The power spectrum densities for each of our quantities have the relations:
+%
+\begin{align}
+S_{\dot{\phi}}(\omega) &= \omega^2 S_\phi(\omega) \\
+S_y(\omega) &= \frac{\omega^2}{\omega_0^2}S_\phi(\omega) \\
+S_x(\omega) &= \frac{1}{\omega_0^2}S_\phi(\omega)
+\end{align}
+%
+
+Oscillator noise can typically be decomposed into a power series $S_\phi(\omega) = \sum_{k=0}^{4} h_k\omega^{-k}$. The $\omega^0$ term is considered white $\phi$ noise, the $\omega^{-1}$ term is considered flicker $\phi$ noise, and $\omega^{-2}$ to be random walk $\phi$ noise. Since $S_{\dot{\phi}}(\omega) = \omega^2 S_\phi(\omega)$, the powers in the series increase by $2$ and we see that the $\omega^{-3}$ term is flicker $\dot{\phi}$ and $\omega^{-4}$ is random walk $\dot{\phi}$. When plotting the power spectral density of oscillator noises on a log-log plot, the various regions where white, flicker, and random walk dominate are indicated by differing slopes of straight lines.
+
+
+
+\section{Allan Variance} \label{sec:avar}
+
+The distribution of frequency error is difficult to determine because the error is typically nonstationary.  The sample variance from finitely many measurements may not converge to the true variance of the process as the number of samples goes to infinity. The Allan Variance is the mean of sample variances calculated over an interval. The definition is based on the fractional frequency $y$ and phase time $x$, however we will convert it into phase $\phi$ terms. We use the averaged quantity $\bar{y}_k$ defined in eq.~\ref{eq:avgy}.
+
+The $N$ sample mean is defined as
+%
+\begin{equation}
+\mu = \frac{1}{N} \sum_{k=1}^{N} \bar{y}_k
+\end{equation}
+%
+where $\tau$ is the time difference between measurements. The sample mean can then be used for the $N$ sample variance
+%
+\begin{equation}
+\sigma_S^2(N) = \frac{1}{N-1} \sum_{k=1}^{N} \left(\bar{y}_k - \mu\right)^2 = \frac{1}{N-1} \sum_{k=1}^{N} \left(\bar{y}_k - \frac{1}{N} \sum_{i=1}^{N} \bar{y}_i\right)^2
+\end{equation}
+%
+
+The Allan variance is the mean of the sample variances over all time.
+%
+\begin{equation}
+\sigma_A^2(N,\tau) = \langle \sigma_S^2(N) \rangle = \bigg\langle \frac{1}{N-1} \sum_{k=1}^{N} \left(\bar{y}_k - \frac{1}{N} \sum_{i=1}^{N} \bar{y}_i\right)^2 \bigg\rangle
+\end{equation}
+%
+The original Allan variance utilises $N$ samples, but typically the two-sample Allan variance is used, $N=2$,
+%
+\begin{equation} \label{eq:2sallan}
+\sigma_A^2(2, \tau) = \frac{1}{2}\langle [\bar{y}_{k+1} - \bar{y}_{k}]^2 \rangle.
+\end{equation}
+%
+It is impractical to test over all time so one can compute the Allan variance from a set of $M$ samples,
+%
+\begin{equation}
+\sigma_A^2(\tau,M) = \frac{1}{2(M-1)}\sum_{k=1}^{M-1} \left(\bar{y}_{k+1} - \bar{y}_{k}\right)^2
+\end{equation}
+
+\section{Structure Functions} \label{sec:structure}
+
+The structure functions are based off of studies that Kolmogorov performed on turbulence. Oscillators have long term frequency drift that can be modeled as a polynomial of time. This long term drift is the source of nonstationarity. Short term frequency instability can be considered stationary. The structure functions can be used to eliminate the long term drift. 
+
+The first difference equation
+%
+\begin{equation}
+\Delta\phi(\tau) := \Delta\phi(t;\tau) = \phi(t+\tau) - \phi(t)
+\end{equation}
+%
+is the total phase accumulated over the interval $\tau$. The $N$-th difference equation is defined recursively
+%
+\begin{equation}
+\Delta^N\phi(\tau) = \Delta^{N-1}\left[\Delta\phi(\tau)\right].
+\end{equation}
+%
+Whenever the process $\phi(t)$ is a (wide-sense) stationary process, the mean of the $N$-difference equation is $0$. The $N$-th structure function is then the second moment of the $N$-th difference equation
+\begin{equation}
+D_\phi^{(N)}(\tau) = \langle (\Delta^N\phi(\tau))^2 \rangle
+\end{equation}
+%
+and can be interpreted as the mean phase accumulation. Dividing the first difference equation by the time difference $\tau$ is equivalent to discrete differentiation in time, so $[\phi(t+\tau) - \phi(t)]/\tau$ is considered the frequency accumulation over $\tau$, and the variance of this term will be the mean frequency accumulation.
+
+The random process doesn't necessarily require (wide-sense) stationarity but the difference equation can be stationary. For example, if the process is an $n$-th order polynomial with an additive stationary process term, then the $M$-th difference equation eliminates all the polynomial terms whenever $M > n$ and we are left with the $M$-th difference of the stationary process. 
+
+The structure functions can be computed to higher accuracy using less data than the correlation function \cite{}. This is particularly noticeable for ``flicker'' noises that has frequency characteristics $f^{-1}$ and is common in oscillator noise.
+
+\section{Converting between different measures} \label{sec:convert}
+%
+The power spectral density can be considered the most fundamental measurement of frequency stability. However, sampling the time data points presents issues for calculating an accurate power spectrum. Most importantly, there may not be enough frequency resolution for low frequency deviations with high power, $f^{-1}$, referred to as ``flicker noise''. When the power spectrum is available then it can be converted to the structure functions and the Allan variance. The reverse is not generally true, though sometimes possible through the use of difficult Mellin transformations.
+
+\subsubsection*{Allan variance to structure function}
+%
+We now show that the Allan variance is proportional to a certain structure function. Use the Allan variance definition in eq.~\ref{eq:2sallan} and $\bar{y}_k = [\phi(t_k+\tau) - \phi(t_k)]/(\omega_0\tau)$, then
+%
+\begin{align} \label{eq:avtosf}
+\sigma_A^2(2, \tau) &= \frac{1}{2}\bigg\langle \left[\frac{\phi(t_k+2\tau) - \phi(t_k+\tau)}{\omega_0\tau} - \frac{\phi(t_k+\tau) - \phi(t_k)}{\omega_0\tau}\right]^2 \bigg\rangle \\
+&= \frac{1}{2\omega_0^2\tau^2} \langle\left[ \phi(t_k+2\tau) - 2\phi(t_k+\tau) + \phi(t_k) \right]^2\rangle.
+\end{align}
+%
+The $t_k$ are arbitrary when averaging over all time, so the averaging term is the form of the structure function $D_\phi^{(2)}(\tau)$. Aside from the extra terms outside of the average, we can interpret the Allan variance as the average frequency accumulation over $\tau$.
+
+\subsubsection*{Power spectral density to structure function}
+%
+The relation between the power spectral density and the structure function depends on the long term frequency drift of the oscillator and if the $M$-th difference equation is stationary. Suppose that the drift is compensated or $M > N$, where $N$ is the highest order polynomial term for the drift, then
+%
+\begin{equation}
+	D_\phi^{(M)}(\tau) = 2^{2M}\int_{-\infty}^{\infty} \sin^{2M}\left( \frac{\omega\tau}{2}\right) S_\phi(\omega) d\omega.
+\end{equation}
+
+\subsubsection*{Power spectral density to Allan variance}
+%
+Since we demonstrated that the Allan variance is proportional to a structure function in eq.~\ref{eq:avtosf}, we can use the results from the last two sections.
+%
+\begin{equation}
+\sigma_A^2(2,\tau) = \frac{2^2}{\omega_0^2\tau^2} \int_{-\infty}^{\infty} \sin^4\left( \frac{\omega\tau}{2} \right) S_\phi(\omega) d\omega
+\end{equation}
+
+\section{Chapter remarks} \label{sec:2conc}
+%
+We will be using the structure functions as our preferred measure of stability. The reason for this is that it requires fewer samples than the correlation to compute ``flicker'' noise \cite{} and it is simple to implement and interpret. The Allan Deviation will be used sparingly because it is a common measure of stability in the literature and we have reinterpreted it as proportional to a specific structure function $D_\phi^{(2)}(\tau)$. The power spectral density is preferred for experimental measurements.
+
+
