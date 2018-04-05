@@ -5,9 +5,9 @@
 
 \section{Introduction}
 
-Optical phenomena in fiber optics provide a source of distortion for a frequency signal. Previous work highlights the various optical impairments in fiber and their influence on a frequency signal (Dr. Menyuk), in this chapter we briefly summarize that work and relate it to our simulations.
+Propagation through optical fiber creates distortion for a frequency signal. Previous work highlights the various optical impairments in fiber and their influence on a frequency signal \cite{menyukIFCS2015}, in this chapter we briefly summarize that work and relate it to our simulations.
 
-The propagation of light through optical fiber is modeled by the Nonlinear Schrodinger (NLS) Equation,
+The propagation of light through optical fiber is modeled by the Nonlinear Schr{\"o}dinger (NLS) Equation \cite{Agrawal2013},
 %
 \begin{equation} \label{eq:nlse}
 \diffp{u}{z} + \beta_1\diffp{u}{t} + \frac{i\beta_2}{2}\diffp{^2u}{t^2} + \frac{\alpha}{2}u = i\gamma|u|^2u.
@@ -24,7 +24,7 @@ The right hand side of eq.~\ref{eq:nlse} is nonlinear, so the sum of two signals
 &= |u_d|^2u_d + 2|u_f|^2u_d + u_f^2u_d^* + u_d^2u_f^* + 2|u_d|^2u_f + |u_f|^2u_f.
 \end{align}
 %
-We can now decouple eq.~\ref{eq:nlse} into two differential equations,
+We can now break eq.~\ref{eq:nlse} into two differential equations,
 %
 \begin{align}
 \label{eq:dfreq}
@@ -40,7 +40,7 @@ In this chapter we will define each of the impairment terms in eqs.~\ref{eq:dfre
 
 \section{Optical Impairments} \label{sec:impair}
 
-In the previous section, we pointed out the nonlinear term and how the sum of two signals creates multiple nonlinear terms. In this section, we shall examine each of the terms related to an optical impairment and how that impairment affects the frequency signal. In the analysis we introduce conditions on the data and frequency channel to make terms in the decoupled equations \ref{eq:dfreq} and \ref{eq:ddata} negligible. 
+In the previous section, we highlighted the nonlinear term and how the sum of two signals creates multiple nonlinear terms. In this section, we shall examine each of the terms related to an optical impairment and how that impairment affects the frequency signal. In the analysis we introduce conditions on the data and frequency channel to make terms in the decoupled equations \ref{eq:dfreq} and \ref{eq:ddata} negligible. 
 
 \subsection{Attenuation and Amplified Spontaneous Emission (ASE)}
 %
@@ -50,7 +50,7 @@ Attenuation appears in the decoupled equations above as
 \diffp{u_f}{z} = -\frac{\alpha_f}{2}u_f, \qquad \diffp{u_d}{z} = -\frac{\alpha_d}{2}u_d.
 \end{equation*}
 
-The attenuation is due to absorption and scattering and will decrease the optical power of the frequency signal exponentially. Amplifiers are spaced periodically to compensate the loss of optical power, but they add noise due to spontaneous emission of photons in the process.  The ASE is a white noise source with noise power
+The attenuation is due to absorption and scattering and will decrease the optical power of the frequency signal exponentially. Amplifiers are spaced periodically to compensate for the loss of optical power, but they add noise due to spontaneous emission of photons in the process.  The ASE is a white noise source with noise power \cite{agrawal2012fiber}
 %
 \begin{equation}
 \sigma^2_{ASE} = n_{sp}h\nu_0 (G-1)\Delta\nu
@@ -58,7 +58,7 @@ The attenuation is due to absorption and scattering and will decrease the optica
 %
 where $n_{sp}$ is called the spontaneous emission factor, $h$ is Planck's constant, $\nu_0$ is the center frequency, $G$ is the gain of the amplifier, and $\Delta\nu$ is the bandwidth of the signal. The bandwidth of the frequency signal will be very narrow making the ASE noise negligible. Notice that the equations \ref{eq:dfreq} and \ref{eq:ddata} are dependent on the frequency signal power, we want to keep this dependency small but so small such that the signal is dominated by ASE noise.
 
-Consider an optical communication system that has $800$ km distance and $80$ km amplifier separation operating at the wavelength $1.5$ $\mu$m with loss $\alpha = 0.2$ dB/km. This implies a gain $G=40$. A typically amplifier will have noise figure $n_{sp} = 2$ with $10$ amplifiers altogether. Supposing the narrow bandwidth of the frequency signal is on the order of $10$ MHz, then the total noise power is $1$ nW.
+Consider an optical communication system that has $800$ km distance and $80$ km amplifier separation operating at the wavelength $1.5$ $\mu$m with loss $\alpha_{dB} = 0.2$ dB/km. This implies a gain $G=40$. A typically amplifier will have noise figure $n_{sp} = 2$ with $10$ amplifiers altogether. Supposing the narrow bandwidth of the frequency signal is on the order of $10$ MHz, then the total noise power is $1$ nW.
 
 \subsection{Chromatic Dispersion}
 
@@ -68,7 +68,7 @@ The dispersion appears as
 \diffp{u_f}{z} = -\frac{i\beta_{2f}}{2}\diffp{^2u_f}{T^2}, \qquad \diffp{u_d}{z} = -\frac{i\beta_{2d}}{2}\diffp{^2u_d}{T^2}.
 \end{equation*}
 %
-This impairment is the form of pulse spreading because the various frequency components of a channel travel at different velocities. The time spread due to dispersion is
+This impairment is pulse spreading because the various frequency components of a channel travel at different velocities. The time spread due to dispersion is \cite{agrawal2012fiber}
 %
 \begin{equation}
 \tau_{disp} = DL\Delta \lambda 
@@ -76,7 +76,7 @@ This impairment is the form of pulse spreading because the various frequency com
 %
 where $D$ is the dispersion parameter, $L$ is the length of the fiber, and $\Delta\lambda$ is the range of wavelengths. Since $\Delta\lambda = \lambda\Delta\nu/\nu$, we see that the narrow bandwidth of the frequency signal will cause a negigible spread in time.
 
-For the optical communication system in the previous example, we find $\tau_{disp} = 1$ ps.
+For the optical communication system in the previous example and the frequency signal centered at a wavelength $\lambda \approx 1.5$ $\mu$m, we find $\tau_{disp} = 1$ ps.
 
 %\subsection{Scattering}
 %
@@ -100,7 +100,7 @@ The terms
 \end{equation*}
 correspond to self-phase modulation. This distortion takes the form of a phase shift dependent on the signal power. Thus, linear attenuation limits the effect over some length after each amplifier. The effective length is $L_{eff} = (1/\alpha)[1-\exp(-\alpha L)]$, so $L_{eff} \approx 20$ km for $\alpha_{dB} = 0.2$ dB/km.
 
-The maximum phase shift due to self-phase modulation for a length of fiber between amplifiers is
+The maximum phase shift due to self-phase modulation for a length of fiber between amplifiers is \cite{Agrawal2013}
 %
 \begin{equation} \label{eq:maxspm}
 \phi_{SPM} = \gamma P_f L_{eff}
@@ -128,15 +128,16 @@ correspond to cross-phase modulation. XPM represents the cross-talk between two 
 
 \section{Phase noise on the frequency signal} \label{sec:noisexpm}
 
-Applying our limits on the system parameters, in the previous section, on the uncoupled equations \ref{eq:dfreq} and \ref{eq:ddata}, results in the following equations
+Applying limits on the system parameters, then the uncoupled equations \ref{eq:dfreq} and \ref{eq:ddata} simplify to the following equations
 %
 \begin{align}
 \label{eq:simpledfreq}
 &\diffp{u_f}{z} = i2\gamma_f|u_d|^2u_f \\
+\label{eq:simpleddata}
 &\diffp{u_d}{z} + \frac{\alpha_d}{2}u_d + d\diffp{u_d}{T} + \frac{i\beta_{2d}}{2}\diffp{^2u_d}{T^2} = i\gamma_d|u_d|^2u_d.
 \end{align}
 %
-Supposing the frequency signal is of the form $u_f(z,T) = u_f(0,T)\exp(i\phi(z,T))$, where $u_f(0,T)$ is the initial frequency source and $\phi(z,T)$ is phase distortion due to XPM. Then, we can solve for the phase distortion using \ref{eq:simpledfreq},
+Suppose the frequency signal is of the form $u_f(z,T) = u_f(0,T)\exp(i\phi(z,T))$, where $u_f(0,T)$ is the initial frequency source and $\phi(z,T)$ is phase distortion due to XPM. Then, we can solve for the phase distortion using \ref{eq:simpledfreq},
 %
 \begin{equation} \label{eq:phasedistort}
 	\phi(z,T) = 4\gamma_f\int_0^z |u_d(0, T-\zeta d)|^2 d\zeta.
@@ -148,4 +149,4 @@ The data channel is now subject to the effects of loss, dispersion, time shift d
 
 \section{Chapter Remarks} \label{sec:3conc}
 
-By limiting the frequency signal's optical power and its location on the frequency spectrum, we can limit the causes of phase distortion due to various optical impairments. This leaves the distortion to one principal source, XPM. In the next chapter, we perform computations to estimate $\phi(z,T)$ for common system parameters of a commercial fiber optic communication system.
+By limiting the frequency signal's optical power and its location on the frequency spectrum, we can limit the causes of phase distortion due to various optical impairments. This leaves the distortion to one principal source, XPM. In the next chapter, we perform computations to estimate $\phi(z,T)$ using common system parameters of a commercial fiber optic communication system.

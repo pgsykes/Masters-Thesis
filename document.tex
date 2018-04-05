@@ -1,8 +1,9 @@
-\documentclass[11pt, letterpaper, twoside, openright]{book}
-	\includeonly{./tex/introduction}
+\documentclass[12pt, letterpaper, twoside, openright, pdftex]{thesis}
+%	\includeonly{./tex/introduction}
 %	\includeonly{./tex/time_stability}
 %	\includeonly{./tex/fiber_impairments}
 %	\includeonly{./tex/results}
+%	\includeonly{./tex/conclusion}
 
 %	\includeonly{./tex/fiber_impairments, ./tex/results}
 	
@@ -12,7 +13,11 @@
 	
 	\usepackage{graphicx}
 	\usepackage{tikz}
+	\usepackage{cite}
 
+	\usepackage{titlesec}
+		\titleformat{\chapter}
+		{\normalfont\large}{Chapter \thechapter:}{1em}{}
 
 
 % Differentiation
@@ -20,8 +25,6 @@
 \newcommand*{\dd}{\partial}
 
 \newcommand*{\diffp}[2]{\ensuremath{\frac{\dd #1}{\dd #2}}}
-\newcommand*{\diffpp}[3]{\ensuremath{\frac{\dd^2 #1}{\dd #2 \dd #3}}}
-\newcommand*{\diffppp}[4]{\ensuremath{\frac{\dd^3 #1}{\dd #2 \dd #3 \dd #4}}}
 \newcommand*{\difff}[2]{\ensuremath{\frac{\d #1}{\d #2}}}
 \newcommand*{\diffff}[3]{\ensuremath{\frac{\d^2 #1}{\d #2 \d #3}}}
 \newcommand*{\D}{\mathcal{D}}
@@ -32,11 +35,17 @@
 
 	
 	\doublespacing
-	
+	\setstretch{2}
+	\openup 1em
 	
 \begin{document}
+	\include{./tex/title}
+	
+	\pagenumbering{roman}
 	\tableofcontents
 	
+	\pagenumbering{arabic}
+	\setcounter{page}{1}
 	\include{./tex/introduction}
 	\include{./tex/time_stability}
 	\include{./tex/fiber_impairments}

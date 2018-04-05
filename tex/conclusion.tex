@@ -1,1 +1,11 @@
 \chapter{Conclusion}
+
+A frequency signal in an optical fiber suffers optical impairments due to the medium. By placing requirements on the location and optical power of the frequency signal, we can eliminate a majority of the impairments.
+
+Systems performing frequency transfer over optical fiber place the frequency signal at a center frequency designated for a data channel which wastes a significant amount of bandwidth. We can solve this issue by moving the frequency signal into the interstices of the data channels. However, placing the frequency signal closer to the data channels will increase the amount of cross-talk which causes an increased amount of phase and frequency error.
+
+We computed the amount of frequency error due to cross-talk using the Allan Deviation and found that it was comparable to environmental effects in experimental setups. This means it is feasible to move the frequency signal to the interstices of two data channels without significant error due to cross-phase modulation.
+
+\section{Future Work}
+
+The length of the optical fiber was chosen to eliminate the effects of self-phase modulation on the data channel. Increasing the length of the transmission to $3000$--$4000$ km, comparable to the length of research institutions in the United States, requires computing the effects of the self-phase modulation. This was avoided in our work because the amount of time necessary to solve the Nonlinear Schr{\"o}dinger Equation using the split-step Fourier method was prohibitively long.
