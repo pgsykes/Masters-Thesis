@@ -8,6 +8,8 @@
 %	\includeonly{./tex/fiber_impairments, ./tex/results}
 	
 	\usepackage{amsmath}
+	\usepackage{amsfonts}
+	\usepackage{amssymb}
 	
 	\usepackage{setspace}
 	
@@ -17,8 +19,13 @@
 
 	\usepackage{titlesec}
 		\titleformat{\chapter}
-		{\normalfont\large}{Chapter \thechapter:}{1em}{}
+		{\normalfont\large\bfseries}{Chapter \thechapter:}{1em}{}
 
+		\titleformat{\section}
+		{\normalfont\large\bfseries}{\thesection}{1em}{}
+		
+		\titleformat{\subsection}
+		{\normalfont}{\thesubsection}{1em}{}
 
 % Differentiation
 \renewcommand*{\d}{\mathrm{d}}
