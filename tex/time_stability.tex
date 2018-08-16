@@ -18,34 +18,36 @@ A frequency source can be represented as
 %
 where $U_0$ is the amplitude and $\epsilon(t)$ is amplitude fluctuation. The quantity $\omega_0=2\pi f_0$ is the nominal angular frequency, and $\phi(t)$ is the phase fluctuation. The amplitude fluctuation must be much less than the nominal amplitude, $|\epsilon(t)| \ll |U_0|$; similarly, the frequency fluctuation, given by the time derivative of the phase, $\dot{\phi} \equiv d\phi/dt$, must be much less than the nominal angular frequency, $|\dot{\phi}| \ll |\omega_0|$. Otherwise, the frequency signal is too heavily distorted to be useful.
 
-A clock can only give a meaningful time with respect to another clock; for instance, the wall clock should match in some way with the position of the sun (which we can consider to be a natural clock). If a clock is fast or slow, it is only in reference to another clock used as a standard. Consider the phases of two different clocks,
+No singular clock can give a meaningful time until it is compared to another clock; for instance, the wall clock should match in some way with the position of the sun (which we can consider to be a natural clock). If a clock is fast or slow, it is only in reference to another clock used as a standard. Any attempt to measure the stability of a clock can only be done with respect to some reference source. The readings of many different clocks are collected and averaged to provide such a reference. 
+
+Consider the phases of two different clocks,
 %
 \begin{equation}
-\omega_1(t) = 2\pi f_1t + \phi_1(t), \qquad \omega_2(t) = 2\pi f_2t + \phi_2(t),
+\psi_1(t) = 2\pi f_1t + \phi_1(t), \qquad \psi_2(t) = 2\pi f_2t + \phi_2(t).
 \end{equation}
 %
-then comparing the times when the two are in phase, $\omega_1(t_{n1}) = \omega_2(t_{n2})$. The time difference between the two is
+If we then compare the times when the two are in phase, $\psi_1(t_{n1}) = \psi_2(t_{n2})$, the time difference between the two is
 %
 \begin{equation}
 t_{n1} - t_{n2} = \left[\frac{f_2 - f_1}{f_1f_2}\right] - \left[\frac{\phi_1(t_{n1})}{2\pi f_1} + \frac{\phi_2(t_{n2})}{2\pi f_2}\right].
 \end{equation}
 %
-The terms in the right bracket represent a phase drift, so if we suppose that any long-term drift in the system is compensated, then we have only a short-term phase instability which we assume has zero mean. Averaging over several of these matched phase terms, we have
+The terms in the right bracket represent a phase drift, so that if we suppose that any long-term drift in the system is compensated, then we have only a short-term phase instability, which we assume has zero mean. Averaging over several of these matched phase terms, we have
 %
 \begin{equation}
 \Delta t = \langle t_{n1} - t_{n2} \rangle = \frac{f_2 - f_1}{f_1f_2} = \frac{\Delta f}{f}T,
 \end{equation}
 %
-where $\Delta t$ is the time deviation, $T$ is a total time, and $\Delta f/f$ is the fractional frequency. For example, an atomic clock based on the cesium standard has fractional frequency of $3 \times 10^{-15}$, this means it has a time deviation of $\pm 1$ sec in $10$ million years \cite{CsFracFreq}.
+where $\Delta t$ is the time deviation, $T$ is a total time, and $\Delta f/f$ is the fractional frequency. For example, an atomic clock based on the cesium standard has fractional frequency of $3 \times 10^{-15}$, corresponding to a time deviation of $\pm 1$ sec in $10$ million years \cite{CsFracFreq}.
 
 Most of the literature on time and frequency control uses the fractional frequency, denoted $y(t)$, and the phase time, $x(t)$, \cite{Kartaschoff1978, Allan1974, Riley1994}
 %
 \begin{equation}
 \label{eq:phasefreqquantities}
-y(t) = \frac{\omega(t) - \omega_0}{\omega_0} = \frac{\dot{\phi}(t)}{\omega_0}, \;\;\;\;\; x(t) = \int_0^t y(\tau)d\tau = \frac{\phi(t)}{\omega_0}.
+y(t) = \frac{\omega(t) - \omega_0}{\omega_0} = \frac{\dot{\phi}(t)}{\omega_0}, \;\;\;\;\; x(t) = \int_0^t y(\tau)d\tau = \frac{\phi(t)}{\omega_0},
 \end{equation}
 %
-where $\omega(t) = \omega_0 + \dot{\phi}(t)$ is the instantaneous frequency. However, it is useful for our theoretical study to work mainly with $\phi$ and $\dot{\phi}$. Using $\phi$ and $\dot{\phi}$ emphasizes the phase and frequency deviations of the signal and is more convenient in theoretical work, whereas the fractional frequency and phase time are better suited for physical measurements. Note also that $x$ and $\phi$ are measured instantaneously because they are based on the phase of the clock, and as detailed in the previous paragraph, measuring $y$ requires a time average
+where $\omega(t) = \omega_0 + \dot{\phi}(t)$ is the instantaneous frequency. However, it is useful for our theoretical study to work mainly with $\phi$ and $\dot{\phi}$. Using $\phi$ and $\dot{\phi}$ emphasizes the phase and frequency deviations of the signal and is more convenient in theoretical work, whereas the fractional frequency and phase time are better suited for physical measurements. Note also that $x$ and $\phi$ are measured instantaneously because they are based on the phase of the clock, and as discussed in the previous paragraph, measuring $y$ requires a time average
 %
 \begin{equation} \label{eq:avgy}
 \bar{y}_k = \frac{1}{\tau}\int_{t_k}^{t_k+\tau} y(t)dt,
@@ -57,7 +59,7 @@ Since the errors have a random component, the use of statistical measures like t
 
 \section{Power Spectral Density} \label{sec:psd}
 
-The PSD of the phase noise can be obtained by feeding the output of a phase demodulator into a spectrum analyser, and, similarly, the PSD of the frequency noise can be obtained by feeding the output of a frequency demodulator into a spectrum analyzer \cite{blair1974time}.
+The PSD of the phase or frequency are the fundamental measures of phase or frequency instability. The PSD provides the contributions of the Fourier frequency components for the random error. We will show in Sec. \ref{sec:convert} how to convert from the PSD to other measures, however converting back to the PSD is frequently not possible.
 
 For any of the quantities $w=x$, $y$, $\phi$, or $\dot{\phi}$ the autocorrelation is defined as
 %
@@ -90,14 +92,40 @@ S_y(\omega) &= \frac{\omega^2}{\omega_0^2}S_\phi(\omega), \\
 S_x(\omega) &= \frac{1}{\omega_0^2}S_\phi(\omega).
 \end{align}
 \end{subequations}
-%
-The oscillator noise can typically be decomposed into a power series $S_\phi(\omega) = \sum_{k=0}^{4} h_k\omega^{-k}$ \cite{Riley1994}. The term proportional to $\omega^0$ is referred to as white phase noise, the term proportional to $\omega^{-1}$ is referred to as flicker phase noise, and the term proportional to $\omega^{-2}$ is referred to as random walk phase noise. Since $S_{\dot{\phi}}(\omega) = \omega^2 S_\phi(\omega)$, the powers in the series increase by $2$. The term proportional to $\omega^{-3}$ is referred to as flicker frequency noise, and the term proportional to $\omega^{-4}$ is referred to as random walk frequency noise \cite{Kartaschoff1978, LohWhite, LohFlicker, NISTFreqStandards}. Figure~\ref{fig:PSD} shows the different noise regions for the PSDs of the fractional frequency $y$ and the phase noise $\phi$.
-%
+
 \begin{figure}[htp]
 	\centering
-	\includegraphics[scale=0.9]{img/PSD.pdf}
-	\caption{Power Spectral Density model from \cite{PSDFigure}} \label{fig:PSD}
+	\begin{tikzpicture}
+	\draw[very thin, color=gray](0,0) grid(9,5);
+	\draw[thick,->] (0,0) -- (9.2,0) node {};
+	\draw[] (4.6,-0.1) node[below] {\Large Log $f$};
+	\draw[thick,->] (0,0) -- (0,5.2) node {};
+	\draw[] (-0.1, 2.5) node[left] {\Large Log $S_{y}(f)$};
+	\draw[very thick] (1, 5) -- (2, 3) -- (4,1) -- (6,1) -- (8,3) -- (9,5);
+	\draw[] (2.2,4) node {$f^{-2}$};
+	\draw[] (3.6,2.3) node {$f^{-1}$};
+	\draw[] (5, 1.5) node {$f^0$};
+	\draw[] (6.8,2.3) node{$f^1$};
+	\draw[] (8,4) node {$f^2$};
+	\end{tikzpicture}
+	\begin{tikzpicture}
+	\draw[very thin, color=gray](0,0) grid(9,11);
+	\draw[thick,->] (0,0) -- (9.2,0) node {};
+	\draw[] (4.6,-0.1) node[below] {\Large Log $f$};
+	\draw[thick,->] (0,0) -- (0,11.2) node {};
+	\draw[] (-0.1, 5.5) node[left] {\Large Log $S_{\phi}(f)$};
+	\draw[very thick] (1, 11) -- (2, 7) -- (3,4) -- (4,2) -- (5,1) -- (8,1);
+	\draw[] (2.2,9) node {$f^{-4}$};
+	\draw[] (3.2,5.5) node {$f^{-3}$};
+	\draw[] (4.2, 3) node {$f^{-2}$};
+	\draw[] (5.05,1.7) node{$f^{-1}$};
+	\draw[] (6.5,1.4) node {$f^0$};
+	\end{tikzpicture}
+	\caption{Schematic illustration of the power spectral density} \label{fig:PSD}
 \end{figure}
+%
+The oscillator noise can typically be decomposed into a power series $S_\phi(\omega) = \sum_{k=0}^{4} h_k\omega^{-k}$ \cite{Riley1994}. The term proportional to $\omega^0$ is referred to as white phase noise, the term proportional to $\omega^{-1}$ is referred to as flicker phase noise, and the term proportional to $\omega^{-2}$ is referred to as random walk phase noise. Since $S_{\dot{\phi}}(\omega) = \omega^2 S_\phi(\omega)$, the powers in the series increase by $2$ for $S_{\dot{\phi}}(\omega)$. The term proportional to $\omega^{-3}$ is referred to as flicker frequency noise, and the term proportional to $\omega^{-4}$ is referred to as random walk frequency noise \cite{Kartaschoff1978, LohWhite, LohFlicker, NISTFreqStandards}. Figure~\ref{fig:PSD} shows the different noise regions for the PSDs of the fractional frequency $y$ and the phase noise $\phi$.
+
 
 \section{Allan Variance} \label{sec:avar}
 
@@ -121,7 +149,7 @@ The Allan variance $\sigma^2_A$ \cite{Allan1974} is the mean of the sample varia
 \sigma_A^2(N,\tau) = \langle \sigma_S^2(N) \rangle = \bigg\langle \frac{1}{N-1} \sum_{k=1}^{N} \left(\bar{y}_k - \frac{1}{N} \sum_{i=1}^{N} \bar{y}_i\right)^2 \bigg\rangle.
 \end{equation}
 %
-In general, the Allan variance utilises $N$ samples, where $N$ can have any integer value greater than $1$, but typically the $N=2$ two-sample Allan variance is used, for which
+In general, the Allan variance utilizes $N$ samples, where $N$ can have any integer value greater than $1$, but typically the $N=2$ two-sample Allan variance is used, for which
 %
 \begin{equation} \label{eq:2sallan}
 \sigma_A^2(2, \tau) = \frac{1}{2}\langle [\bar{y}_{k+1} - \bar{y}_{k}]^2 \rangle.
@@ -165,14 +193,14 @@ is the total phase accumulated over the interval $\tau$. The $N$-th difference e
 \Delta^N\phi(\tau) = \Delta^{N-1}\left[\Delta\phi(\tau)\right].
 \end{equation}
 %
-Whenever the process $\phi(t)$ is a stationary process, the mean of the $N$-th difference equation is $0$. The $N$-th order structure function is then the second moment of the $N$-th difference equation,
+If the process $\phi(t)$ is a stationary process, the mean of the $N$-th difference equation is $0$ for all $N\ge 1$. The $N$-th order structure function is then the second moment of the $N$-th difference equation,
 \begin{equation}
 D_\phi^{(N)}(\tau) = \langle [\Delta^N\phi(\tau)]^2 \rangle.
 \end{equation}
 %
-Since the first difference equation is the total phase accumulation, the function $[D_\phi^{(1)}(\tau)]^{1/2}$ equals the mean phase accumulation. Dividing the first difference equation by the time difference $\tau$ is equivalent to discrete differentiation in time, so that $[\phi(t+\tau) - \phi(t)]/\tau$ is the discrete frequency accumulation over $\tau$, and the standard deviation of this term is the mean frequency accumulation \cite{Lindsey1976}.
+Since the first difference equals the total phase accumulation over the interval $\tau$, the function $[D_\phi^{(1)}(\tau)]^{1/2}$ equals the mean phase accumulation. Dividing the first difference equation by the time difference $\tau$ is equivalent to discrete differentiation in time, so that $[\phi(t+\tau) - \phi(t)]/\tau$ is the discrete frequency accumulation over $\tau$, and the standard deviation of this term is the mean frequency accumulation \cite{Lindsey1976}.
 
-The random process need not be stationary in order for the difference equation to be stationary. For example, if the process is the sum of an $n$-th order polynomial in time with an additive stationary process, then the $M$-th difference equation eliminates all the polynomial terms whenever $M > n$, and we are left with the $M$-th difference of the stationary process. 
+The random process need not be stationary in order for the difference equation to be stationary. For example, if the process is the sum of an $n$-th order polynomial in time with an additive stationary process, then the $M$-th difference equation eliminates all the polynomial terms whenever $M > n$, and we are left with the $M$-th difference of a stationary process. 
 
 For a stationary process, there is a further simplification for the first-order structure function. Expanding this structure function, we find
 %
@@ -207,7 +235,7 @@ The $t_k$ are arbitrary when averaging over all time; so, the ensemble average i
 
 \subsubsection*{PSD to structure functions:}
 %
-The relation between the PSD and the structure function depends on the long-term frequency drift of the oscillator and whether the $M$-th difference equation is stationary \cite{Lindsey1976}. Suppose that the drift is compensated or $M > N$, where $N$ is the highest-order polynomial term for the drift, then we find
+The relation between the PSD and the structure function depends on the long-term frequency drift of the oscillator and whether the $M$-th difference equation is stationary \cite{Lindsey1976}. If we suppose that the drift is compensated or $M > N$, where $N$ is the highest-order polynomial term for the drift, then we find
 %
 \begin{equation}
 	D_\phi^{(M)}(\tau) = 2^{2M}\int_{-\infty}^{\infty} \sin^{2M}\left( \frac{\omega\tau}{2}\right) S_\phi(\omega) d\omega.

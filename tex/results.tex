@@ -3,35 +3,35 @@
 
 \section{Introduction}
 
-In the previous chapter, we described the parameters of a commercial fiber optical communication system and a frequency signal that would limit the distortion of the frequency signal located between two data signals in a commercial wavelength division multiplexed communication system, as shown in Fig.~\ref{fig:system}. Given reasonable system parameters, the dominant optical impairment is XPM, given by Eq.~\ref{eq:phasedistort}.
-%
+In the previous chapter, we described the parameters of a commercial WDM optical fiber communication system with a frequency signal that is located between two data channels, as shown in Fig.~\ref{fig:system}. Given reasonable system parameters, we showed that the dominant optical impairment is XPM, given by Eq.~\ref{eq:phasedistort}, and all other optical impairments can be made negligible.
 
+It follows that the phase distortion depends on the length of fiber, the frequency separation between the frequency signal and the data channels, and the power of the neighboring data channels as they change over the course of their propagation. We will now vary these parameters and investigate their effect on the stability of the frequency signal.
 
-It follows that the phase distortion depends on the length of fiber, the relative velocity difference between the frequency signal and the data signals, and the power of the data signal as it changes over the course of its propagation. We will now vary these parameters and investigate their effect on the stability of the frequency signal.
-
-We choose values for the data signal power and the Kerr nonlinearity $\gamma$ that are typical in commercial optical communication systems. These values are chosen to minimize nonlinear distortion in the data signals \cite{Agrawal2013, agrawal2012fiber}. Hence, we may neglect the nonlinear distortion of the data signals when calculating $\phi(z,t)$ and focus on the effect of dispersion. The evolution of the data signal is then easily obtained in the Fourier domain, and we find
+We choose a value for the data channel power that is typical in commercial optical communication systems. These values are chosen to minimize nonlinear distortion in the data signals \cite{Agrawal2013, agrawal2012fiber}. Hence, we neglect the nonlinear distortion of the data signals when calculating $\phi(z,t)$ and focus on the effect of dispersion. The evolution of the data signal is then easily obtained in the Fourier domain, and we find
 %
 \begin{equation} \label{eq:datasol}
-u_d(z',T) = \frac{1}{2\pi} \int_{-\infty}^{\infty} U_d(0, \omega')\exp\left(-\frac{\alpha}{2} z' + i\delta\omega' z' + \frac{i}{2}\beta_2\omega'^2z'-i\omega' t\right) d\omega' ,
+u_d(z,T) = \frac{1}{2\pi} \int_{-\infty}^{\infty} U_d(0, \omega')\exp\left(-\frac{\alpha}{2} z + i\delta\omega' z + \frac{i}{2}\beta_2\omega'^2z-i\omega' t\right) d\omega' ,
 \end{equation}
 %
-where $U_d(0,\omega)$ is the Fourier spectrum of the data signal at $z'=0$ defined as
+where $U_d(0,\omega)$ is the Fourier spectrum of the data signal at $z=0$ defined as
 \begin{equation}
 U_d(0,\omega) = \int_{-\infty}^{\infty} u_d(0, t')\exp(i\omega t')dt'.
 \end{equation}
 
-We begin by investigating the distribution of the power of the data signal, $|u_d|^2$, as a function of length $z'$. The on-off-keyed nonreturn-to-zero (OOK-NRZ) symbols of the data signal change over the length of the fiber due to dispersion, self-phase modulation, and attenuation. We first study a system in which attenuation is neglected. We then add the effect of attenuation. Finally, we study the system behavior as the group velocity difference increases.
+We begin by investigating the distribution of the power of the data signal, $|u_d|^2$, as a function of length $z$. The on-off-keyed nonreturn-to-zero (OOK-NRZ) symbols of the data signal change over the length of the fiber due to dispersion, self-phase modulation, and attenuation. We first study a system in which attenuation is neglected. We then add the effect of attenuation. Finally, we study the system behavior as the group velocity difference due to the frequency separation between the neighboring data channels and frequency signal increases.
 
 \section{Simulation Parameters}
 
-The simulation data signal is a $2^{10}-1$ pseudorandom binary string \cite{PRBS} that is OOK-NRZ modulated with optical power of $1$ mW with periodic boundary conditions. The fiber has an attenuation of $0.2$ dB/km, group velocity dispersion $\beta_2 = -22$ ps$^2$/km, and Kerr nonlinearity $1.3$ W$^{-1}$km$^{-1}$. The data signal has a central wavelength of $1530$ nm with group velocity difference $\delta = 1$ ps/km relative to the frequency signal. Some of these parameters will vary in the following sections as we study the changes in the XPM-induced phase distortion.
+The simulated data signal is a $2^{10}-1$ pseudorandom binary string (PRBS) \cite{PRBS} that is OOK-NRZ modulated with optical power of $1$ mW with periodic boundary conditions. The PRBS is used because it simplifies our computations and it has properties that resemble a random sequence (its autocorrelation function is approximately a delta function and there are almost equal number of $0$s and $1$s). The length of the string is chosen so that the string doesn't repeat as the data channel travels through a fixed time point in the frequency signal.
+
+The fiber has an attenuation of $\alpha = 0.2$ dB/km, group velocity dispersion $\beta_2 = -22$ ps$^2$/km, and Kerr nonlinearity $\gamma = 1.3$ W$^{-1}$km$^{-1}$. The data signal has a central wavelength of $1530$ nm with inverse group velocity difference $\delta = 1$ ps/km relative to the frequency signal. These parameters are typical for optical fiber communication systems \cite{agrawal2012fiber,Agrawal2013}. We will vary some of these parameters in the following sections as we study the changes in the XPM-induced phase distortion.
 
 
 \section{Without Attenuation}
 
-We first neglect attenuation to provide a baseline against which to determine the effect of attenuation.
+We first neglect attenuation in order to provide a baseline against which to determine its effect.
 
-During propagation, the optical power in each bit of the data signal spreads outside of its time slot into the time slots of its neighbors. After some long distance, the expected power in each time slot will become the same. Therefore, the variance of the data signal's optical power should mainly decrease as a function of fiber length. Figure~\ref{fig:NACalcVar} shows the data signal power variance as the distance varies up to $800$ km. Since there is no attenuation, the mean of the data signal power is constant. Though it isn't shown in the figure, longer propagation distances yield a variance on the order of $1.8 \times 10^{-7}$ W$^2$.
+During propagation, the optical power in each bit of the data signal spreads outside of its time slot into the time slots of its neighbors. After some long distance, the expected power in each time slot will become the same. Therefore, the variance of the data signal's optical power is expected to decrease as a function of fiber length, although there will be statistical fluctuations in the pseudo-random signal that we are using. Figure~\ref{fig:NACalcVar} shows the data signal power variance as the distance varies up to $800$ km. Since there is no attenuation, the mean of the data signal power is constant. Though not shown in the figure, longer propagation distances yield a variance on the order of $1.8 \times 10^{-7}$ W$^2$.
 %
 \begin{figure}[htb]
 	\centering
@@ -41,7 +41,7 @@ During propagation, the optical power in each bit of the data signal spreads out
 %
 
 
-The phase shift $\phi$ grows as a function of distance because the frequency signal experiences cross-talk from the data signal which accumulates the phase shift over the propagation length. Figures \ref{fig:NAPhiMean}a and \ref{fig:NAPhiVar}b show the mean and variance of the phase shift on the frequency signal due to XPM, respectively. The mean of $\phi$ grows linearly with respect to the fiber length because without attenuation the average energy in the data signal is constant. As a consequence, the mean additive phase error that can be compensated.
+The phase shift $\phi$ grows as a function of distance because the frequency signal experiences cross-talk from the data signal, which accumulates over the propagation length. Figures \ref{fig:NAPhiMean}a and \ref{fig:NAPhiVar}b show the mean and variance of the phase shift of the frequency signal due to XPM. The mean of $\phi$ grows linearly with respect to the fiber length because without attenuation the average energy in the data signal is constant. As a consequence, the mean additive phase error can be compensated.
 %
 \begin{figure}[htb]
 	\begin{tabular}{c c}
@@ -52,12 +52,12 @@ The phase shift $\phi$ grows as a function of distance because the frequency sig
 \end{figure}
 %
 
-We will quantify the phase stability using the measures that we introduced in Chapter \ref{chap:time_stability}. We first consider the first structure equation, $D^{(1)}_\phi = \langle [\phi(t+\tau) - \phi(t)]^2 \rangle$, which represents the mean phase accumulation. The structure functions are related to the autocorrelation function. A typical data signal is a collection of apparently random bits that are uncorrelated with each other. As the data signal propagates through the fiber, the optical energy associated with each bit occupies a larger amount of time due to dispersion, so that the amount of time in which a bit is correlated with itself increases. Figure \ref{fig:NAPhaseStability} shows $\left[D^{(1)}_\phi\right]^{1/2}$ at different lengths. The phase stability becomes constant after a short amount of time.
+We will quantify the phase deviation using the measures that we introduced in Chapter \ref{chap:time_stability}. We first consider the first structure equation, $D^{(1)}_\phi = \langle [\phi(t+\tau) - \phi(t)]^2 \rangle$, which represents the mean phase accumulation. As we discussed in Chapter \ref{chap:time_stability}, the structure functions are related to the autocorrelation function. A typical data signal is a collection of apparently random bits that are uncorrelated with each other. As the data signal propagates through the fiber, the optical energy associated with each bit occupies a larger amount of time due to dispersion, so that the amount of time in which a bit is correlated with itself increases. Figure \ref{fig:NAPhaseStability} shows $\left[D^{(1)}_\phi\right]^{1/2}$ at different lengths. The phase deviation becomes constant after a short amount of time.
 %
 \begin{figure}[htb]
 	\centering
 	\includegraphics[scale=0.9]{img/NAPhaseStability}
-	\caption{Phase stability vs. averaging time $\tau$} \label{fig:NAPhaseStability}
+	\caption{Phase deviation vs. averaging time $\tau$} \label{fig:NAPhaseStability}
 \end{figure}
 %
 
@@ -68,7 +68,7 @@ We will quantify the phase stability using the measures that we introduced in Ch
 	\caption{Allan deviation} \label{fig:NAAllanDev}
 \end{figure}
 %
-Figure \ref{fig:NAAllanDev} shows the Allan deviation. After averaging the fractional frequency over a time interval on the order of the duration of the bit pulse, $\tau = 10^{-10}$ s, the Allan deviation starts to fall off at the rate of $\tau^{-1}$. This fall off signifies the fast oscillating errors are being averaged out. We expect the fall off to continue indefinitely because XPM contributes no long-term frequency drift. We have computed the Allan deviation up to $10$ ns, at which point the trend proportional to $\tau^{-1}$ is apparent. Extrapolating the $\tau^{-1}$ dependence to longer averaging times, we find that the Allan deviation is $3\times 10^{-15}$ at $\tau = 1$ s, and $3\times 10^{-18}$ at $\tau=10^3$ s.
+Figure \ref{fig:NAAllanDev} shows the Allan deviation. After averaging the fractional frequency over a time interval on the order of the duration of the bit pulse, $\tau = 10^{-10}$ s, the Allan deviation starts to fall off at the rate of $\tau^{-1}$. This falloff signifies that rapidly oscillating errors are being averaged out. We expect the falloff to continue indefinitely because XPM contributes no long-term frequency drift. We have computed the Allan deviation up to $10$ ns, at which point the trend proportional to $\tau^{-1}$ is apparent. Extrapolating the $\tau^{-1}$ dependence to longer averaging times, we find that the Allan deviation is $3\times 10^{-15}$ at $\tau = 1$ s, and $3\times 10^{-18}$ at $\tau=10^3$ s.
 
 \section{Effect of Attenuation}
 
@@ -92,17 +92,16 @@ First, we compare the variance of the attenuated data signal with the variance w
 	\caption{(a)\label{fig:APhiMean} Mean of $\phi$ vs. fiber length (b)\label{fig:APhiVar} Variance of $\phi$ vs. fiber length}
 \end{figure}
 %
-The mean and variance of $\phi$ must also grow over the length of the fiber, but they no longer grow almost linearly because the data signal power varies. Instead, the mean and the variance grow in steps. Figures \ref{fig:APhiMean}a and \ref{fig:APhiVar}b show the mean and variance of $\phi$ respectively, in which flat regions where the data signal power is low are visible. The mean and variance are less than those that we obtained when attenuation was neglected because overall the data signal optical power is lower.
+The mean and variance of $\phi$ must also grow over the length of the fiber, but they no longer grow almost linearly because the data signal power varies. Instead, the mean and the variance grow in steps. Figures \ref{fig:APhiMean}a and \ref{fig:APhiVar}b show the mean and variance of $\phi$ respectively, in which flat regions where the data signal power is low are visible. The mean and variance are less than those that we obtained when attenuation was neglected because average power of the data channels is lower.
 
 %
 \begin{figure}[htb]
 	\centering
 	\includegraphics[scale=0.9]{img/APhaseStability}
-	\caption{Phase stability with attenuation} \label{fig:APhaseStability}
+	\caption{Phase deviation with attenuation} \label{fig:APhaseStability}
 \end{figure}
 % 
-The phase stability $\left[D^{(1)}_\phi\right]^{1/2}$ reaches an asymptotic value as was the case when attenuation is neglected. Since the asymptotic value depends on the pulse spreading due to dispersion, the asymptotes occur at the same times. However, the phase stability will be lesser than the figure without attenuation, because the effect of XPM on the frequency signal from the data signal depends on the optical power of the data signal. Figure~\ref{fig:APhaseStability} shows $\left[D^{(1)}_\phi\right]^{1/2}$ for different fiber lengths.
-
+The phase deviation $\left[D^{(1)}_\phi\right]^{1/2}$ reaches an asymptotic value as was the case when attenuation is neglected. Since the asymptotic value depends on the pulse spreading due to dispersion, the asymptotes occur at the same times. However, the phase deviation will be lower than was the case without attenuation, because the effect of XPM on the frequency signal from the data channels depends on the optical power of the data channels. Figure~\ref{fig:APhaseStability} shows $\left[D^{(1)}_\phi\right]^{1/2}$ for different fiber lengths.
 
 %
 \begin{figure}[htb]
@@ -111,23 +110,22 @@ The phase stability $\left[D^{(1)}_\phi\right]^{1/2}$ reaches an asymptotic valu
 	\caption{Allan deviation with attenuation} \label{fig:AAllanDev}
 \end{figure}
 % 
-Finally, the Allan deviation will be comparable to the results in the previous section. Figure~\ref{fig:AAllanDev} shows the Allan deviation for several fiber lengths, and we see a similar trend as we saw in the Allan deviation without attenuation. At very low averaging times $\tau < 10^{-11}$ s, there is higher uncertainty than in Figure~\ref{fig:NAAllanDev}, this is due to high frequency ASE noise in the data signal. The Allan deviation will also decrease at a rate of $\tau^{-1}$ after an averaging time interval approximately equal to the bit duration. We perform the same extrapolation method as in the previous section, and we find an Allan deviation of $10^{-15}$ at $\tau=1$ s, and $10^{-18}$ at $\tau=10^3$ s.
+Finally, the Allan deviation will be comparable to the results in the previous section. Figure~\ref{fig:AAllanDev} shows the Allan deviation for several fiber lengths, and we see a similar trend to what we saw without attenuation. At very low averaging times, $\tau < 10^{-11}$ s, there is higher uncertainty than in Figure~\ref{fig:NAAllanDev} due to high frequency ASE noise in the data signal. The Allan deviation will also decrease at a rate of $\tau^{-1}$ after an averaging time interval approximately equal to the bit duration. We perform the same extrapolation as in the previous section, and we find an Allan deviation of $10^{-15}$ at $\tau=1$ s, and $10^{-18}$ at $\tau=10^3$ s.
 
-\section{Varying the Group Velocity Difference}
+\section{Varying the Frequency Separation}
 
-The relative group velocity difference governs the rate at which the data signal travels through a fixed time point in the frequency signal. The group velocity difference is related to the separation between the center frequencies of the data signals and the frequency signal. The value $\delta = (v_{f}-v_{d})/(v_fv_d) = 1$ ps/km was chosen because it corresponds to the smallest group velocity difference $(v_f-v_d)$ while adhering to the ITU grid standard. The smallest separation in the ITU grid standard is $12.5$ GHz which means that we place the frequency signal roughly $6.25$ GHz away from the data signal's center frequency. As the distance between the center frequencies decreases, the group velocity difference decreases and thus $\delta$ decreases. 
+The frequency separation between the data channels and the frequency signal will lead to a group velocity difference between the data channels and the signal channels, due to chromatic dispersion. The relative group velocity difference governs the rate at which the data signal travels through a fixed time point in the frequency signal. The group velocity difference is related to the separation between the center frequencies of the data channels and the frequency signal. The value $\delta = (v_{f}-v_{d})/(v_fv_d) = 1$ ps/km is chosen because it corresponds to placing the frequency signal at the midpoint between two neighboring data channels separated by $12.5$ GHz. As the separation between the center frequencies decreases, the group velocity difference decreases and thus $\delta$ decreases. 
 
-Figure~\ref{fig:GVPhaseStability} shows the phase stability for different frequency spacings between the data and frequency signal. The $6.25$ GHz separation refers to the system where the frequency signal is placed in the boundaries of two neighboring data signals. The other separations in the figure refer to the center frequency spacings defined in the ITU grid standard. The justification for our choice in these values is due to experiments in frequency transfer over optical fiber communication systems that utilize a data channel for the frequency signal.
-%
 \begin{figure}[htb]
 	\centering
 	\includegraphics[scale=0.9]{img/GVPhaseStability}
-	\caption{Phase stability vs. group velocity difference} \label{fig:GVPhaseStability}
+	\caption{Phase deviation vs. group velocity difference} \label{fig:GVPhaseStability}
 \end{figure}
 %
+Figure~\ref{fig:GVPhaseStability} shows the phase deviation for different frequency spacings between the data and frequency signal. The $6.25$ GHz separation refers to the system where the frequency signal is placed in the boundaries of two neighboring data signals. The $12.5$ GHz separation corresponds to placing the frequency signal in the neighboring channel ordinarily used for data. Further separations are used to demonstrate the effect of XPM diminishing as the data channel is placed further away from the frequency signal.
 
 \section{Chapter Remarks}
 
-Since the bits of any data signal are uncorrelated, the phase stability will asymptote at an averaging time corresponding to the duration of a bit window and the relative group velocity of the data signal. When the relative group velocity is greater, the stability reaches its final value at a smaller distance because the data signal passes through a fixed time point in the frequency signal at a much faster rate. 
+Since the bits in any data signal are uncorrelated, the phase deviation will asymptote at an averaging time that corresponds approximately to the time that it takes a single bit to slide through a constant phase point in the frequency signal. When the relative group velocity is greater, the stability reaches its final value at a smaller distance because the data signal passes through a fixed time point in the frequency signal at a much faster rate. 
 
-The Allan deviation represents the amount of frequency error. Experiments performing frequency transfer with a frequency signal and data signal located on the ITU standards have Allan deviation values that are comparable to our simulated values \cite{Serrano2013,cantin2017progress}. The source of error in the experiments is due to temperature fluctuations. Hence, placing a frequency signal in the interstices of two data signals gives a frequency error on the order of environmental effects and should therefore be feasible.
+The Allan deviation represents the expected frequency error. Experiments performing frequency transfer with a frequency signal that occupies an entire data channel on the ITU grid have Allan deviations that are comparable to our simulated values \cite{Serrano2013,cantin2017progress}. In this case, the frequency signal and data channels are separated by many GHz. The source of error in the experiments is due to temperature fluctuations. We have found that placing a frequency signal in the interstices of two data signals gives a frequency error on the order of environmental effects and should therefore be feasible. Hence, it is not necessary to use an entire data channel to transfer a frequency signal.
