@@ -18,68 +18,69 @@ A frequency source can be represented as
 %
 where $U_0$ is the amplitude and $\epsilon(t)$ is amplitude fluctuation. The quantity $\omega_0=2\pi f_0$ is the nominal angular frequency, and $\phi(t)$ is the phase fluctuation. The amplitude fluctuation must be much less than the nominal amplitude, $|\epsilon(t)| \ll |U_0|$; similarly, the frequency fluctuation, given by the time derivative of the phase, $\dot{\phi} \equiv d\phi/dt$, must be much less than the nominal angular frequency, $|\dot{\phi}| \ll |\omega_0|$. Otherwise, the frequency signal is too heavily distorted to be useful.
 
-No singular clock can give a meaningful time until it is compared to another clock; for instance, the wall clock should match in some way with the position of the sun (which we can consider to be a natural clock). If a clock is fast or slow, it is only in reference to another clock used as a standard. Any attempt to measure the stability of a clock can only be done with respect to some reference source. The readings of many different clocks are collected and averaged to provide such a reference. 
+No clock can give a meaningful time until it is compared to another clock; for instance, a wall clock should match in some way with the position of the sun (which we can consider to be a natural clock). If a clock is fast or slow, it is only in reference to another clock used as a standard. Any attempt to measure the stability of a clock can only be done with respect to some reference source. The readings of many different clocks can be collected and averaged to provide such a reference \cite{BIPM, BIPM2}. 
 
-Consider the phases of two different clocks,
+Consider two different clocks with internal frequency sources that produce sinusoidally oscillating signals proportional to
 %
 \begin{equation}
-\psi_1(t) = 2\pi f_1t + \phi_1(t), \qquad \psi_2(t) = 2\pi f_2t + \phi_2(t).
+\sin\left[2\pi f_1t + \phi_1(t)\right] \quad \text{ and } \quad \sin\left[2\pi f_2t + \phi_2(t)\right],
 \end{equation}
 %
-If we then compare the times when the two are in phase, $\psi_1(t_{n1}) = \psi_2(t_{n2})$, the time difference between the two is
+with phase terms
 %
 \begin{equation}
-t_{n1} - t_{n2} = \left[\frac{f_2 - f_1}{f_1f_2}\right] - \left[\frac{\phi_1(t_{n1})}{2\pi f_1} + \frac{\phi_2(t_{n2})}{2\pi f_2}\right].
+\psi_1(t) = 2\pi f_1t + \phi_1(t) \quad \text{ and } \quad \psi_2(t) = 2\pi f_2t + \phi_2(t),
 \end{equation}
 %
-The terms in the right bracket represent a phase drift, so that if we suppose that any long-term drift in the system is compensated, then we have only a short-term phase instability, which we assume has zero mean. Averaging over several of these matched phase terms, we have
+respectively. The time $t$ that is produced by each clock is a derived quantity that is calculated by counting every instance that the phase term equals a particular value $\Psi$. There are two times $t_{n1}$ and $t_{n2}$ that correspond to $n$ counts of $\Psi$ for each phase term, $\psi_j(t_{nj}) = n\Psi$. The time difference between the two is
 %
 \begin{equation}
-\Delta t = \langle t_{n1} - t_{n2} \rangle = \frac{f_2 - f_1}{f_1f_2} = \frac{\Delta f}{f}T,
+t_{n1} - t_{n2} = \frac{n\Psi}{2\pi}\left[\frac{f_2 - f_1}{f_1f_2}\right] - \left[\frac{\phi_1(t_{n1})}{2\pi f_1} + \frac{\phi_2(t_{n2})}{2\pi f_2}\right].
 \end{equation}
 %
-where $\Delta t$ is the time deviation, $T$ is a total time, and $\Delta f/f$ is the fractional frequency. For example, an atomic clock based on the cesium standard has fractional frequency of $3 \times 10^{-15}$, corresponding to a time deviation of $\pm 1$ sec in $10$ million years \cite{CsFracFreq}.
+Suppose one clock is more accurate and precise than the other, so that we can treat it as a reference, and we can attribute all of the error to the other. Consider the first clock as the reference.
+The terms in the right brackets represent a phase drift, so that if we suppose that any long-term drift in the system is compensated, then we only have a short-term phase instability, which we assume has zero mean. Averaging over several of these matched phase terms, we have
+%
+\begin{equation}
+\Delta t = \langle t_{n1} - t_{n2} \rangle = \frac{n\Psi}{2\pi f_1}\frac{f_2 - f_1}{f_2} = \frac{\Delta f}{f}T,
+\end{equation}
+%
+where $\Delta t$ is the time deviation, $T=n\Psi/(2\pi f_1)$ is a total time, and $\Delta f/f$ is the fractional frequency uncertainty. This procedure does not work for the most accurate and precise clocks, since there is no ``better'' clock that can be used as a reference. For the best clocks that are used as time and frequency standards, it is necessary to compare the times from several clocks of the same type. It is then possible to statistically infer the fractional frequency uncertainty \cite{blair1974time}. A typical atomic clock based on the cesium standard has a fractional frequency uncertainty of about $3 \times 10^{-15}$, corresponding to a time deviation of $\pm 1$ sec in $10$ million years \cite{CsFracFreq}.
 
-Most of the literature on time and frequency control uses the fractional frequency, denoted $y(t)$, and the phase time, $x(t)$, \cite{Kartaschoff1978, Allan1974, Riley1994}
+Most of the literature on time and frequency control uses the fractional frequency $y(t)$ and the phase time $x(t)$ \cite{Kartaschoff1978, Allan1974, Riley1994},
 %
 \begin{equation}
 \label{eq:phasefreqquantities}
 y(t) = \frac{\omega(t) - \omega_0}{\omega_0} = \frac{\dot{\phi}(t)}{\omega_0}, \;\;\;\;\; x(t) = \int_0^t y(\tau)d\tau = \frac{\phi(t)}{\omega_0},
 \end{equation}
 %
-where $\omega(t) = \omega_0 + \dot{\phi}(t)$ is the instantaneous frequency. However, it is useful for our theoretical study to work mainly with $\phi$ and $\dot{\phi}$. Using $\phi$ and $\dot{\phi}$ emphasizes the phase and frequency deviations of the signal and is more convenient in theoretical work, whereas the fractional frequency and phase time are better suited for physical measurements. Note also that $x$ and $\phi$ are measured instantaneously because they are based on the phase of the clock, and as discussed in the previous paragraph, measuring $y$ requires a time average
-%
-\begin{equation} \label{eq:avgy}
-\bar{y}_k = \frac{1}{\tau}\int_{t_k}^{t_k+\tau} y(t)dt,
-\end{equation}
-%
-where the index $k$ refers to some specific time $t_k$.
+where $\omega(t) = \omega_0 + \dot{\phi}(t)$ is the instantaneous frequency. However, it is useful for our theoretical study to work mainly with $\phi$ and $\dot{\phi}$. Using $\phi$ and $\dot{\phi}$ emphasizes the phase and frequency deviations of the signal and is more convenient in theoretical work, whereas the fractional frequency and phase time are better suited for physical measurements.
 
 Since the errors have a random component, the use of statistical measures like the power spectral density (PSD) is necessary. In general, the variations in time and frequency measurements cannot be described as a stationary process and defining a variance in the usual sense is not possible \cite{Allan1974, blair1974time}. This difficulty led to the invention of the Allan variance \cite{Allan1974, blair1974time}. Structure functions are another approach to characterising phase and frequency variations \cite{Lindsey1976}. In this chapter, we will describe these different approaches and then show the relationships among them.
 
 \section{Power Spectral Density} \label{sec:psd}
 
-The PSD of the phase or frequency are the fundamental measures of phase or frequency instability. The PSD provides the contributions of the Fourier frequency components for the random error. We will show in Sec. \ref{sec:convert} how to convert from the PSD to other measures, however converting back to the PSD is frequently not possible.
+The PSD of the phase or frequency are the fundamental measures of phase or frequency instability. The PSD provides the contributions of the Fourier frequency components for the random error. We will show in Sec. \ref{sec:convert} how to convert from the PSD to the structure functions and the Allan variance; however, converting back to the PSD is frequently not possible.
 
-For any of the quantities $w=x$, $y$, $\phi$, or $\dot{\phi}$ the autocorrelation is defined as
+For any of the quantities $w=x$, $y$, $\phi$, or $\dot{\phi}$ the autocorrelation function is defined as
 %
 \begin{equation}
 \label{eq:autocorr}
 R_w(\tau) = \langle w(t)w(t+\tau) \rangle = \lim\limits_{T\to\infty}\frac{1}{T}\int_{0}^{T} w(t)w(t+\tau)dt,
 \end{equation}
 %
-and the corresponding PSDs are the Fourier transforms of the autocorrelations
+and the corresponding PSDs are the Fourier transforms of the autocorrelation functions,
 %
 \begin{align}
-S_w(\omega) &= 2\int_0^\infty R_w(\tau)\cos(\omega\tau)d\tau \\
-R_w(\tau) &= \frac{1}{\pi}\int_0^\infty S_w(\omega)\cos(\omega\tau)d\omega
+S_w(\omega) &= 2\int_0^\infty R_w(\tau)\cos(\omega\tau)d\tau, \\
+R_w(\tau) &= \frac{1}{\pi}\int_0^\infty S_w(\omega)\cos(\omega\tau)d\omega.
 \end{align}
 %
-Evaluating $R_w(\tau)$ at $\tau = 0$ gives us the second moment of $w$, 
+Evaluating $R_w(\tau)$ at $\tau = 0$ yields the second moment of $w$, 
 %
-\begin{equation*}
-R_w(0) = \langle [w(t)]^2 \rangle = \int_0^\infty S_w(\omega) d\omega
-\end{equation*}
+\begin{equation}
+R_w(0) = \langle [w(t)]^2 \rangle = \int_0^\infty S_w(\omega) d\omega,
+\end{equation}
 %
 which we refer to as the signal power. If we compare the PSD of two different sources, then the one with the lower signal power will typically have less error.
 
@@ -94,13 +95,13 @@ S_x(\omega) &= \frac{1}{\omega_0^2}S_\phi(\omega).
 \end{subequations}
 
 \begin{figure}[htp]
-	\centering
+	\raggedright
 	\begin{tikzpicture}
 	\draw[very thin, color=gray](0,0) grid(9,5);
 	\draw[thick,->] (0,0) -- (9.2,0) node {};
-	\draw[] (4.6,-0.1) node[below] {\Large Log $f$};
+	\draw[] (4.6,-0.1) node[below] {\Large log $f$};
 	\draw[thick,->] (0,0) -- (0,5.2) node {};
-	\draw[] (-0.1, 2.5) node[left] {\Large Log $S_{y}(f)$};
+	\draw[] (-0.1, 2.5) node[left] {\Large log $S_{y}(f)$};
 	\draw[very thick] (1, 5) -- (2, 3) -- (4,1) -- (6,1) -- (8,3) -- (9,5);
 	\draw[] (2.2,4) node {$f^{-2}$};
 	\draw[] (3.6,2.3) node {$f^{-1}$};
@@ -111,9 +112,9 @@ S_x(\omega) &= \frac{1}{\omega_0^2}S_\phi(\omega).
 	\begin{tikzpicture}
 	\draw[very thin, color=gray](0,0) grid(9,11);
 	\draw[thick,->] (0,0) -- (9.2,0) node {};
-	\draw[] (4.6,-0.1) node[below] {\Large Log $f$};
+	\draw[] (4.6,-0.1) node[below] {\Large log $f$};
 	\draw[thick,->] (0,0) -- (0,11.2) node {};
-	\draw[] (-0.1, 5.5) node[left] {\Large Log $S_{\phi}(f)$};
+	\draw[] (-0.1, 5.5) node[left] {\Large log $S_{\phi}(f)$};
 	\draw[very thick] (1, 11) -- (2, 7) -- (3,4) -- (4,2) -- (5,1) -- (8,1);
 	\draw[] (2.2,9) node {$f^{-4}$};
 	\draw[] (3.2,5.5) node {$f^{-3}$};
@@ -121,15 +122,24 @@ S_x(\omega) &= \frac{1}{\omega_0^2}S_\phi(\omega).
 	\draw[] (5.05,1.7) node{$f^{-1}$};
 	\draw[] (6.5,1.4) node {$f^0$};
 	\end{tikzpicture}
-	\caption{Schematic illustration of the power spectral density} \label{fig:PSD}
+	\renewcommand{\baselinestretch}{1}
+	\small\normalsize
+	\caption{Schematic illustration of the power spectral density in which different powers of $f$ appear. Based on \cite{PSDFigure}. \label{fig:PSD}}
 \end{figure}
-%
-The oscillator noise can typically be decomposed into a power series $S_\phi(\omega) = \sum_{k=0}^{4} h_k\omega^{-k}$ \cite{Riley1994}. The term proportional to $\omega^0$ is referred to as white phase noise, the term proportional to $\omega^{-1}$ is referred to as flicker phase noise, and the term proportional to $\omega^{-2}$ is referred to as random walk phase noise. Since $S_{\dot{\phi}}(\omega) = \omega^2 S_\phi(\omega)$, the powers in the series increase by $2$ for $S_{\dot{\phi}}(\omega)$. The term proportional to $\omega^{-3}$ is referred to as flicker frequency noise, and the term proportional to $\omega^{-4}$ is referred to as random walk frequency noise \cite{Kartaschoff1978, LohWhite, LohFlicker, NISTFreqStandards}. Figure~\ref{fig:PSD} shows the different noise regions for the PSDs of the fractional frequency $y$ and the phase noise $\phi$.
+\renewcommand{\baselinestretch}{2}
+\small\normalsize
+
+The oscillator noise can typically be decomposed into a power series $S_\phi(\omega) = \sum_{k=0}^{4} h_k\omega^{-k}$ \cite{Riley1994}. The term proportional to $\omega^0$ is referred to as white phase noise, the term proportional to $\omega^{-1}$ is referred to as flicker phase noise, and the term proportional to $\omega^{-2}$ is referred to as random walk phase noise. The term proportional to $\omega^{-3}$ is referred to as flicker frequency noise, and the term proportional to $\omega^{-4}$ is referred to as random walk frequency noise \cite{Kartaschoff1978, LohWhite, LohFlicker, NISTFreqStandards}. Since $S_{\dot{\phi}}(\omega) = \omega^2 S_\phi(\omega)$, the powers in the series increase by $2$ for $S_{\dot{\phi}}(\omega)$. Figure~\ref{fig:PSD} shows the different noise regions for the PSDs of the fractional frequency $y$ and the phase noise $\phi$.
 
 
 \section{Allan Variance} \label{sec:avar}
 
-The distribution of the frequency errors is difficult to determine because it is typically nonstationary.  The sample variance from finitely many measurements may not converge to the true variance of the process as the number of samples goes to infinity. The Allan variance is the mean of sample variances calculated over an interval. The definition is based on the fractional frequency $y$ and phase time $x$; however, we will express it in terms of the phase $\phi$. We use the averaged quantity $\bar{y}_k$ defined in Eq.~\ref{eq:avgy}.
+The distribution of the frequency errors is difficult to determine because it is typically nonstationary.  Nonstationary processes may have divergent statistical measures, specifically the variance. Moreover, if there is a true convergent variance, the sample variance from finitely many measurements may not converge to the true variance of the process as the number of samples and the time over which they are measured goes to infinity. The Allan variance is the mean of sample variances calculated over an interval. The definition is based on the fractional frequency $y$ and phase time $x$; however, we will express it in terms of the phase $\phi$. We use an averaged quantity of the fractional frequency defined as
+\begin{equation}
+\label{eq:avgy}
+\bar{y}_k = \frac{1}{\tau}\int_{t_k}^{t_k+\tau} y(t)dt,
+\end{equation}
+which is frequently used in the literature\cite{Kartaschoff1978}.
 
 The $N$-sample mean is defined as
 %
@@ -167,9 +177,9 @@ The averaged fractional frequency is related to the phase by the relationship $\
 \begin{equation} \label{eq:phiallan}
 \sigma_A^2(\tau) = \frac{1}{2}\bigg\langle \left[\frac{\phi(t_k+2\tau) - \phi(t_k+\tau)}{\omega_0\tau} - \frac{\phi(t_k+\tau) - \phi(t_k)}{\omega_0\tau}\right]^2 \bigg\rangle.
 \end{equation}
-Since the fractions in the average are similar to the discrete derivative, we see that the Allan variance defined in this way refers to the short-term frequency stability, i.e. $\dot{\phi}/\omega_0$.
+Since the fractions in the average are similar to the discrete derivative, we see that the Allan variance defined in this way refers to the short-term frequency instability, i.e. $\dot{\phi}/\omega_0$.
 
-The Allan deviation is usually plotted in the literature and is the square root of the Allan variance. Allan deviation is usually depicted as the symbol $\sigma_y(\tau)$, $\sigma_A(\tau)$, or ADEV.
+The Allan deviation is usually plotted in the literature and is the square root of the Allan variance. Allan deviation is typically denoted $\sigma_y(\tau)$, $\sigma_A(\tau)$, or ADEV.
 
 \section{Structure Functions} \label{sec:structure}
 
@@ -213,16 +223,16 @@ The first two terms on the right-hand-side of the equation are the variance of t
 %
 \begin{equation}
 \label{eq:structuretoautocorr}
-\langle [\phi(t+\tau) - \phi(t)]^2 \rangle = 2R_\phi(0) - 2R_\phi(\tau)
+\langle [\phi(t+\tau) - \phi(t)]^2 \rangle = 2R_\phi(0) - 2R_\phi(\tau),
 \end{equation}
 %
-where $R_\phi(\tau)$ is the autocorrelation defined in Eq.~\ref{eq:autocorr}. The structure functions can be computed to higher accuracy using less data than the correlation function \cite{Schulz-DuBois1981}. This advantage is particularly noticeable for flicker noise, whose power spectral density is proportional to $\omega^{-1}$ and is commonly present in oscillators.
+where $R_\phi(\tau)$ is the autocorrelation function defined in Eq.~\ref{eq:autocorr}. The structure functions can be computed to higher accuracy using less data than the correlation function \cite{Schulz-DuBois1981}. This advantage is particularly noticeable for flicker noise, whose power spectral density is proportional to $\omega^{-1}$ and is commonly present in oscillators.
 
 \section{Converting between different measures} \label{sec:convert}
 %
-The power spectral density (PSD) is the most fundamental measure of frequency stability. However, sampling the time data points over a sufficiently long time to accurately obtain the PSD at low frequencies can be difficult. In particular, there may not be enough frequency resolution to obtain the low frequency deviations proportional to $\omega^{-1}$ \cite{LohFlicker}. When the PSD is available, the structure functions and the Allan variance can be obtained from it. The reverse is not generally true, although it is sometimes possible through the use of Mellin transformations \cite{Kartaschoff1978, Lindsey1976}.
+The power spectral density (PSD) is the most fundamental measure of frequency instability. However, sampling the time data points over a sufficiently long time to accurately obtain the PSD at low frequencies can be difficult. In particular, there may not be enough frequency resolution to obtain the low frequency deviations proportional to $\omega^{-1}$ \cite{LohFlicker}. When the PSD is available, the structure functions and the Allan variance can be obtained from it. The reverse is not generally true, although it is sometimes possible through the use of Mellin transformations \cite{Kartaschoff1978, Lindsey1976}.
 
-\subsubsection*{Allan variance to the second-order structure function:}
+\subsection{Allan variance to the second-order structure function:}
 %
 We now show that the Allan variance is proportional to the second-order structure function. Using the definition of Allan variance in Eq.~\ref{eq:phiallan}, we obtain
 %
@@ -233,7 +243,7 @@ We now show that the Allan variance is proportional to the second-order structur
 %
 The $t_k$ are arbitrary when averaging over all time; so, the ensemble average is equal to the structure function $D_\phi^{(2)}(\tau)$ divided by $2\omega_0^2$.
 
-\subsubsection*{PSD to structure functions:}
+\subsection{PSD to structure functions:}
 %
 The relation between the PSD and the structure function depends on the long-term frequency drift of the oscillator and whether the $M$-th difference equation is stationary \cite{Lindsey1976}. If we suppose that the drift is compensated or $M > N$, where $N$ is the highest-order polynomial term for the drift, then we find
 %
@@ -241,7 +251,7 @@ The relation between the PSD and the structure function depends on the long-term
 	D_\phi^{(M)}(\tau) = 2^{2M}\int_{-\infty}^{\infty} \sin^{2M}\left( \frac{\omega\tau}{2}\right) S_\phi(\omega) d\omega.
 \end{equation}
 
-\subsubsection*{PSD to Allan variance:}
+\subsection{PSD to Allan variance:}
 %
 Since we demonstrated that the Allan variance is proportional to a structure function in Eq.~\ref{eq:avtosf}, we combine the results from the last two sections, and we obtain
 %
@@ -251,5 +261,5 @@ Since we demonstrated that the Allan variance is proportional to a structure fun
 
 \section{Chapter remarks} \label{sec:2conc}
 %
-We will be using the structure functions, specifically $D^{(1)}_\phi(\tau)$, as our preferred measure of stability. The reason for this choice is that it requires fewer samples to compute the flicker noise, and it is simple to implement and interpret. We will also use the Allan deviation to characterize the stability because it is a common measure of frequency stability in the oscillator community, and we can obtain it from the structure function $D_\phi^{(2)}(\tau)$. The phase noise PSD is preferred for experimental measurements.
+We will be using the structure functions, specifically $D^{(1)}_\phi(\tau)$, as our preferred measure of instability. The reason for this choice is that it requires fewer samples to compute the flicker noise, and it is simple to implement and interpret. We will also use the Allan deviation to characterize the instability because it is a common measure of frequency instability in the oscillator community, and we can obtain it from the structure function $D_\phi^{(2)}(\tau)$. The phase noise PSD is preferred for experimental measurements.
 
